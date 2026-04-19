@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 PSY5502 — Guide Examen Oral | Dr. Guindon</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Syne:wght@700;800&display=swap');
+
+  :root {
+    --bg: #0f0f13;
+    --surface: #16161e;
+    --surface2: #1e1e2a;
+    --border: #2a2a3a;
+    --text: #e8e8f0;
+    --muted: #6e6e8a;
+    --accent: #7c6af5;
+
+    /* Category colors */
+    --humeur: #6366f1;
+    --humeur-glow: rgba(99,102,241,0.2);
+    --anxiete: #10b981;
+    --anxiete-glow: rgba(16,185,129,0.2);
+    --toc: #f59e0b;
+    --toc-glow: rgba(245,158,11,0.2);
+    --trauma: #ef4444;
+    --trauma-glow: rgba(239,68,68,0.2);
+    --autres: #a855f7;
+    --autres-glow: rgba(168,85,247,0.2);
+
+    /* Section colors (5 criteria) */
+    --c1: #6366f1; /* Diagnostic */
+    --c2: #f59e0b; /* Différentiel */
+    --c3: #10b981; /* Outils */
+    --c4: #a855f7; /* Étiologie */
+    --c5: #ef4444; /* Intervention */
+
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  html { scroll-behavior: smooth; }
+  
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ═══════════════════════════════════════
+     HEADER & TIMER
+  ═══════════════════════════════════════ */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,15,19,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .header-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #7c6af5, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
+  }
+
+  .timer-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  #timer {
+    font-family: 'Calibri', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: #10b981;
+    letter-spacing: 2px;
+  }
+  #timer.warn { color: #f59e0b; }
+  #timer.danger { color: #ef4444; animation: pulse 1s infinite; }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+  .btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .btn:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-sm { padding: 4px 10px; font-size: 12px; }
+
+  /* Progress bar */
+  .progress-bar-wrap {
+    width: 120px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6366f1, #10b981);
+    border-radius: 3px;
+    transition: width 0.5s;
+  }
+  .progress-label { font-size: 11px; color: var(--muted); }
+
+  /* ═══════════════════════════════════════
+     LAYOUT
+  ═══════════════════════════════════════ */
+  .layout {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    min-height: calc(100vh - 57px);
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 16px 0;
+    position: sticky;
+    top: 57px;
+    height: calc(100vh - 57px);
+    overflow-y: auto;
+  }
+
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-track { background: transparent; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .sidebar-section { padding: 0 12px; margin-bottom: 8px; }
+  
+  .sidebar-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 8px 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .sidebar-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s;
+    margin-bottom: 2px;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-item:hover { background: var(--surface2); }
+  .nav-item.active { background: rgba(124,106,245,0.15); color: var(--accent); }
+  
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .nav-check {
+    margin-left: auto;
+    font-size: 12px;
+    color: #10b981;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .nav-item.done .nav-check { opacity: 1; }
+
+  /* MAIN CONTENT */
+  .main {
+    padding: 24px;
+    overflow-y: auto;
+  }
+
+  /* ═══════════════════════════════════════
+     DISORDER CARD
+  ═══════════════════════════════════════ */
+  .disorder-section {
+    margin-bottom: 32px;
+    scroll-margin-top: 70px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-icon {
+    font-size: 24px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    flex-shrink: 0;
+  }
+
+  .section-meta {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .section-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-family: 'Calibri', monospace;
+  }
+
+  .section-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .mastered-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'Arial', sans-serif;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .mastered-btn.done {
+    background: rgba(16,185,129,0.15);
+    border-color: #10b981;
+    color: #10b981;
+  }
+
+  /* 5-criteria grid */
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 12px;
+  }
+
+  .criterion-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .criterion-head {
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .criterion-body {
+    padding: 12px 14px;
+  }
+
+  .criterion-body ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .criterion-body li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .criterion-body li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--muted);
+    font-weight: 700;
+  }
+
+  .criterion-body li strong {
+    font-weight: 600;
+    color: #e8e8f0;
+  }
+
+  .criterion-body .tag {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 11px;
+    font-family: 'Calibri', monospace;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 2px 2px 2px 0;
+  }
+
+  /* Criterion colors */
+  .crit-1 .criterion-head { background: rgba(99,102,241,0.12); color: #818cf8; border-color: rgba(99,102,241,0.2); }
+  .crit-2 .criterion-head { background: rgba(245,158,11,0.12); color: #fbbf24; border-color: rgba(245,158,11,0.2); }
+  .crit-3 .criterion-head { background: rgba(16,185,129,0.12); color: #34d399; border-color: rgba(16,185,129,0.2); }
+  .crit-4 .criterion-head { background: rgba(168,85,247,0.12); color: #c084fc; border-color: rgba(168,85,247,0.2); }
+  .crit-5 .criterion-head { background: rgba(239,68,68,0.12); color: #f87171; border-color: rgba(239,68,68,0.2); }
+
+  /* Category-colored borders */
+  .humeur-card { border-top: 3px solid var(--humeur); }
+  .anxiete-card { border-top: 3px solid var(--anxiete); }
+  .toc-card { border-top: 3px solid var(--toc); }
+  .trauma-card { border-top: 3px solid var(--trauma); }
+  .autres-card { border-top: 3px solid var(--autres); }
+
+  /* Category-colored section backgrounds */
+  .cat-humeur .section-icon { background: var(--humeur-glow); }
+  .cat-anxiete .section-icon { background: var(--anxiete-glow); }
+  .cat-toc .section-icon { background: var(--toc-glow); }
+  .cat-trauma .section-icon { background: var(--trauma-glow); }
+  .cat-autres .section-icon { background: var(--autres-glow); }
+
+  /* ═══════════════════════════════════════
+     FLASHCARD MODE
+  ═══════════════════════════════════════ */
+  #flashcard-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  #flashcard-overlay.active { display: flex; }
+
+  .flashcard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: min(600px, 90vw);
+    padding: 32px;
+    position: relative;
+  }
+
+  .fc-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 32px; height: 32px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted);
+    font-size: 16px;
+  }
+
+  .fc-category {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    color: var(--muted);
+  }
+
+  .fc-question {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+
+  .fc-answer {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    display: none;
+    margin-bottom: 20px;
+  }
+  .fc-answer.visible { display: block; }
+  
+  .fc-answer ul { list-style: none; padding: 0; }
+  .fc-answer li { padding: 2px 0 2px 14px; position: relative; }
+  .fc-answer li::before { content: '›'; position: absolute; left: 0; color: var(--muted); }
+
+  .fc-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .fc-progress-text {
+    font-family: 'Calibri', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin-left: auto;
+  }
+
+  /* ═══════════════════════════════════════
+     CATEGORY PAGE HEADERS
+  ═══════════════════════════════════════ */
+  .cat-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding: 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+
+  .cat-header-icon { font-size: 36px; }
+  .cat-header-title { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; }
+  .cat-header-desc { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* ═══════════════════════════════════════
+     LEGEND / CHEAT LEGEND
+  ═══════════════════════════════════════ */
+  .legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ═══════════════════════════════════════
+     QUICK REF BANNER
+  ═══════════════════════════════════════ */
+  .quick-ref {
+    background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(16,185,129,0.08));
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  .quick-ref-title {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: #818cf8;
+  }
+  .qr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+  }
+  .qr-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  .qr-item strong { color: var(--accent); }
+
+  /* ═══════════════════════════════════════
+     MNEMO BOX
+  ═══════════════════════════════════════ */
+  .mnemo {
+    background: rgba(168,85,247,0.08);
+    border: 1px solid rgba(168,85,247,0.2);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 12px;
+    margin-top: 10px;
+  }
+  .mnemo-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #c084fc;
+    margin-bottom: 4px;
+  }
+  .mnemo-text { font-family: 'Calibri', monospace; font-size: 13px; color: var(--text); }
+
+  /* ═══════════════════════════════════════
+     PAGE SECTIONS
+  ═══════════════════════════════════════ */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* Tab navigation */
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tab-btn {
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Arial', sans-serif;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tab-btn:hover { border-color: var(--accent); color: var(--text); }
+  .tab-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+  /* Verbatim phrases */
+  .phrases-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-top: 24px;
+  }
+  .phrases-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fbbf24;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .phrase-item {
+    background: var(--surface2);
+    border-left: 3px solid #fbbf24;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  /* ═══════════════════════════════════════
+     SEARCH
+  ═══════════════════════════════════════ */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .search-input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    padding: 8px 14px 8px 36px;
+    font-family: 'Arial', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--accent); }
+  .search-icon {
+    position: absolute;
+    left: 10px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 14px;
+    pointer-events: none;
+  }
+
+  /* highlight search */
+  mark {
+    background: rgba(245,158,11,0.3);
+    color: inherit;
+    border-radius: 2px;
+  }
+
+  /* ═══════════════════════════════════════
+     TOOLS REFERENCE PAGE
+  ═══════════════════════════════════════ */
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .tool-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: #34d399;
+    margin-bottom: 4px;
+  }
+  .tool-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .tool-for { margin-top: 6px; font-size: 12px; }
+  .tool-for span {
+    display: inline-block;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-size: 11px;
+    margin: 2px 2px 0 0;
+    color: var(--muted);
+  }
+
+  /* ═══════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .header-title { font-size: 14px; }
+    #timer { font-size: 18px; }
+    .criteria-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ FLASHCARD OVERLAY ════════════════════ -->
+<div id="flashcard-overlay">
+  <div class="flashcard">
+    <button class="fc-close" onclick="closeFlashcards()">✕</button>
+    <div class="fc-category" id="fc-category"></div>
+    <div class="fc-question" id="fc-question"></div>
+    <div class="fc-answer" id="fc-answer"></div>
+    <div class="fc-controls">
+      <button class="btn" onclick="showAnswer()">Voir réponse</button>
+      <button class="btn" onclick="nextCard(-1)">⟵ Précédent</button>
+      <button class="btn" onclick="nextCard(1)">Suivant ⟶</button>
+      <div class="fc-progress-text" id="fc-progress"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ HEADER ════════════════════ -->
+<header class="header">
+  <div class="header-title">🧠 PSY5502 — Examen Oral</div>
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+    <div class="timer-wrap">
+      <span style="font-size:12px;color:var(--muted);">⏱</span>
+      <span id="timer">2:00:00</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:2px;">
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+      <div class="progress-label" id="progress-label">0 / 0 maîtrisés</div>
+    </div>
+    <button class="btn btn-sm" onclick="startFlashcards()">🃏 Flashcards</button>
+    <button class="btn btn-sm" onclick="resetAll()">↺ Reset</button>
+  </div>
+</header>
+
+<!-- ════════════════════ LAYOUT ════════════════════ -->
+<div class="layout">
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Navigation</div>
+      <button class="nav-item active" onclick="showPage('accueil')">🏠 Accueil & Légende</button>
+      <button class="nav-item" onclick="showPage('outils')">🔬 Outils d'évaluation</button>
+      <button class="nav-item" onclick="showPage('phrases')">💬 Phrases verbatim</button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label" style="color:#818cf8;">🟣 Troubles de l'humeur</div>
+      <button class="nav-item" id="nav-tdm" onclick="showPage('tdm')">
+        <span class="nav-dot" style="background:#6366f1"></span> Dépression majeure
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-tdp" onclick="showPage('tdp')">
+        <span class="nav-dot" style="background:#6366f1"></span> Trouble dépressif persistant
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-bip1" onclick="showPage('bip1')">
+        <span class="nav-dot" style="background:#6366f1"></span> Trouble bipolaire I
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-bip2" onclick="showPage('bip2')">
+        <span class="nav-dot" style="background:#6366f1"></span> Trouble bipolaire II
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-cyclo" onclick="showPage('cyclo')">
+        <span class="nav-dot" style="background:#6366f1"></span> Cyclothymie
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-deuil" onclick="showPage('deuil')">
+        <span class="nav-dot" style="background:#6366f1"></span> Deuil prolongé
+        <span class="nav-check">✓</span>
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label" style="color:#34d399;">🟢 Troubles anxieux</div>
+      <button class="nav-item" id="nav-tag" onclick="showPage('tag')">
+        <span class="nav-dot" style="background:#10b981"></span> TAG
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-panic" onclick="showPage('panic')">
+        <span class="nav-dot" style="background:#10b981"></span> Trouble panique
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-anxsoc" onclick="showPage('anxsoc')">
+        <span class="nav-dot" style="background:#10b981"></span> Anxiété sociale
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-agora" onclick="showPage('agora')">
+        <span class="nav-dot" style="background:#10b981"></span> Agoraphobie
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-phobie" onclick="showPage('phobie')">
+        <span class="nav-dot" style="background:#10b981"></span> Phobie spécifique
+        <span class="nav-check">✓</span>
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label" style="color:#fbbf24;">🟡 TOC & apparentés</div>
+      <button class="nav-item" id="nav-toc" onclick="showPage('toc')">
+        <span class="nav-dot" style="background:#f59e0b"></span> TOC
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-tdc" onclick="showPage('tdc')">
+        <span class="nav-dot" style="background:#f59e0b"></span> Trouble dysmorphique corporel
+        <span class="nav-check">✓</span>
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label" style="color:#f87171;">🔴 Trauma & stress</div>
+      <button class="nav-item" id="nav-tspt" onclick="showPage('tspt')">
+        <span class="nav-dot" style="background:#ef4444"></span> TSPT / PTSD
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-aigu" onclick="showPage('aigu')">
+        <span class="nav-dot" style="background:#ef4444"></span> Trouble stress aigu
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-adapt" onclick="showPage('adapt')">
+        <span class="nav-dot" style="background:#ef4444"></span> Trouble de l'adaptation
+        <span class="nav-check">✓</span>
+      </button>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label" style="color:#c084fc;">🟣 Autres troubles</div>
+      <button class="nav-item" id="nav-schizo" onclick="showPage('schizo')">
+        <span class="nav-dot" style="background:#a855f7"></span> Schizophrénie
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-tpl" onclick="showPage('tpl')">
+        <span class="nav-dot" style="background:#a855f7"></span> Trouble pers. limite (TPL)
+        <span class="nav-check">✓</span>
+      </button>
+      <button class="nav-item" id="nav-tdah" onclick="showPage('tdah')">
+        <span class="nav-dot" style="background:#a855f7"></span> TDAH
+        <span class="nav-check">✓</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ══════════ PAGE: ACCUEIL ══════════ -->
+    <div id="page-accueil" class="page active">
+      <div class="cat-header" style="background:linear-gradient(135deg,rgba(124,106,245,0.1),rgba(16,185,129,0.1));border-color:rgba(124,106,245,0.3);">
+        <div class="cat-header-icon">🧠</div>
+        <div>
+          <div class="cat-header-title">Guide Examen Oral — PSY5502</div>
+          <div class="cat-header-desc">Dr. Marilyn Guindon · Université d'Ottawa · Psychopathologie adulte · 15 minutes</div>
+        </div>
+      </div>
+
+      <div class="legend" style="margin-bottom:20px;">
+        <div class="legend-item"><div class="legend-dot" style="background:#818cf8"></div> <strong>Bleu</strong> = Diagnostic DSM + CIM-11</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div> <strong>Jaune</strong> = Diagnostics différentiels</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> <strong>Vert</strong> = Outils d'évaluation</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#c084fc"></div> <strong>Mauve</strong> = Facteurs étiologiques</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f87171"></div> <strong>Rouge</strong> = Interventions probantes</div>
+      </div>
+
+      <div class="quick-ref">
+        <div class="quick-ref-title">⚡ MÉMO ULTRA-RAPIDE — Les 5 questions à l'examen</div>
+        <div class="qr-grid">
+          <div class="qr-item"><strong>1️⃣ Diagnostic principal</strong><br>DSM-5-TR + CIM-11 code + spécificateurs</div>
+          <div class="qr-item"><strong>2️⃣ Diagnostics différentiels</strong><br>Au moins 2-3, expliquer pourquoi exclu</div>
+          <div class="qr-item"><strong>3️⃣ Instruments d'évaluation</strong><br>Nommer, décrire brièvement leur utilité</div>
+          <div class="qr-item"><strong>4️⃣ Facteurs étiologiques</strong><br>Bio → Psycho → Social (modèle biopsychosocial)</div>
+          <div class="qr-item"><strong>5️⃣ Interventions probantes</strong><br>TCC en premier, pharmacologie si applicable</div>
+        </div>
+      </div>
+
+      <div class="quick-ref" style="margin-top:12px;border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.05);">
+        <div class="quick-ref-title" style="color:#f87171;">🎯 Conseil de la prof: "Ça saute aux yeux dès les premières lignes"</div>
+        <div style="font-size:13px;line-height:1.7;">
+          Repérer immédiatement: <br><strong>humeur ↓ ≥2 sem</strong> → Dépression <br> <strong>humeur ↑/énergie ≥1 sem</strong> → Manie/Bipolaire I <br> <strong>humeur ↑ ≥4j</strong> → Hypomanie/Bipolaire II <br> <strong>inquiétude excessive ≥6 mois</strong> → TAG <br> <strong>attaques de panique récurrentes</strong> → Trouble panique <br> <strong>évitement social marqué</strong> → Anxiété sociale <br> <strong>obsessions + compulsions</strong> → TOC <br> <strong>post-traumatique: reviviscences</strong> → TSPT
+        </div>
+      </div>
+
+      <div style="margin-top:24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">
+        <div onclick="showPage('tdm')" style="cursor:pointer;background:var(--humeur-glow);border:1px solid rgba(99,102,241,0.3);border-radius:var(--radius);padding:14px;">
+          <div style="font-size:20px;margin-bottom:6px;">🔵</div>
+          <div style="font-weight:700;color:#818cf8;margin-bottom:4px;">Troubles de l'humeur</div>
+          <div style="font-size:12px;color:var(--muted);">TDM · TDP · Bipolaire I/II · Cyclothymie · Deuil</div>
+        </div>
+        <div onclick="showPage('tag')" style="cursor:pointer;background:var(--anxiete-glow);border:1px solid rgba(16,185,129,0.3);border-radius:var(--radius);padding:14px;">
+          <div style="font-size:20px;margin-bottom:6px;">🟢</div>
+          <div style="font-weight:700;color:#34d399;margin-bottom:4px;">Troubles anxieux</div>
+          <div style="font-size:12px;color:var(--muted);">TAG · Panique · Anxiété sociale · Agoraphobie · Phobie</div>
+        </div>
+        <div onclick="showPage('toc')" style="cursor:pointer;background:var(--toc-glow);border:1px solid rgba(245,158,11,0.3);border-radius:var(--radius);padding:14px;">
+          <div style="font-size:20px;margin-bottom:6px;">🟡</div>
+          <div style="font-weight:700;color:#fbbf24;margin-bottom:4px;">TOC & apparentés</div>
+          <div style="font-size:12px;color:var(--muted);">TOC · TDC · Thésaurisation</div>
+        </div>
+        <div onclick="showPage('tspt')" style="cursor:pointer;background:var(--trauma-glow);border:1px solid rgba(239,68,68,0.3);border-radius:var(--radius);padding:14px;">
+          <div style="font-size:20px;margin-bottom:6px;">🔴</div>
+          <div style="font-weight:700;color:#f87171;margin-bottom:4px;">Trauma & stresseurs</div>
+          <div style="font-size:12px;color:var(--muted);">TSPT · Stress aigu · Trouble adaptatif</div>
+        </div>
+        <div onclick="showPage('schizo')" style="cursor:pointer;background:var(--autres-glow);border:1px solid rgba(168,85,247,0.3);border-radius:var(--radius);padding:14px;">
+          <div style="font-size:20px;margin-bottom:6px;">🟣</div>
+          <div style="font-weight:700;color:#c084fc;margin-bottom:4px;">Autres troubles</div>
+          <div style="font-size:12px;color:var(--muted);">Schizophrénie · TPL · TDAH</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ HELPER FUNCTION: DISORDER CARD ══════════ -->
+    <!-- Each disorder page is generated by JS -->
+
+    <!-- ══════════ PAGE: OUTILS ══════════ -->
+    <div id="page-outils" class="page">
+      <div class="cat-header" style="background:rgba(16,185,129,0.05);border-color:rgba(16,185,129,0.2);">
+        <div class="cat-header-icon">🔬</div>
+        <div>
+          <div class="cat-header-title" style="color:#34d399;">Instruments d'évaluation</div>
+          <div class="cat-header-desc">Questionnaires, échelles et outils utilisés en psychologie clinique</div>
+        </div>
+      </div>
+
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input class="search-input" type="text" placeholder="Rechercher un outil..." id="tools-search" oninput="filterTools()">
+      </div>
+
+      <div id="tools-list">
+        <div class="tool-card">
+          <div class="tool-name">PHQ-9 — Patient Health Questionnaire</div>
+          <div class="tool-desc">9 items · Auto-rapporté · Dépistage et sévérité de la dépression majeure. Score ≥10 = dépression modérée. Basé sur les critères DSM du TDM.</div>
+          <div class="tool-for">Pour : <span>Dépression majeure</span><span>TDP</span><span>Deuil prolongé</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">GAD-7 — Generalized Anxiety Disorder Scale</div>
+          <div class="tool-desc">7 items · Auto-rapporté · Dépistage et sévérité de l'anxiété généralisée. Score ≥10 = anxiété modérée à sévère. Excellente sensibilité et spécificité pour le TAG.</div>
+          <div class="tool-for">Pour : <span>TAG</span><span>Trouble panique</span><span>Anxiété sociale</span><span>TSPT</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">BDI-II — Beck Depression Inventory</div>
+          <div class="tool-desc">21 items · Auto-rapporté · Évalue la sévérité des symptômes dépressifs. Score 0-63. Très utilisé en recherche et clinique. Aligné avec critères DSM.</div>
+          <div class="tool-for">Pour : <span>Dépression majeure</span><span>TDP</span><span>Bipolaire</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">BAI — Beck Anxiety Inventory</div>
+          <div class="tool-desc">21 items · Auto-rapporté · Mesure la sévérité des symptômes anxieux (surtout somatiques). Bonne discrimination anxiété/dépression.</div>
+          <div class="tool-for">Pour : <span>TAG</span><span>Trouble panique</span><span>Phobie spécifique</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">SCID-5 — Structured Clinical Interview for DSM-5</div>
+          <div class="tool-desc">Entrevue semi-structurée administrée par un clinicien. Étalon-or pour le diagnostic DSM-5. Couvre tous les principaux troubles mentaux.</div>
+          <div class="tool-for">Pour : <span>Tous les troubles</span><span>Diagnostic différentiel</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">MINI — Mini International Neuropsychiatric Interview</div>
+          <div class="tool-desc">Entrevue structurée courte (~15 min) · Explore les principaux troubles DSM/CIM · Très utilisée en clinique et recherche. Version 7.0 pour DSM-5.</div>
+          <div class="tool-for">Pour : <span>Tous les troubles</span><span>Dépistage rapide</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">PCL-5 — PTSD Checklist for DSM-5</div>
+          <div class="tool-desc">20 items · Auto-rapporté · Mesure la sévérité des symptômes du TSPT selon les 4 clusters (intrusion, évitement, altérations cognitives, hyperactivation). Seuil ≥33.</div>
+          <div class="tool-for">Pour : <span>TSPT</span><span>Trouble stress aigu</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Y-BOCS — Yale-Brown Obsessive-Compulsive Scale</div>
+          <div class="tool-desc">10 items · Administré par clinicien · Évalue sévérité des obsessions ET compulsions séparément. Score 0-40. Étalon-or pour le TOC. Existe aussi version auto-rapportée (OBQ).</div>
+          <div class="tool-for">Pour : <span>TOC</span><span>TOC apparentés</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">MDQ — Mood Disorder Questionnaire</div>
+          <div class="tool-desc">13 items + 2 items de contexte · Auto-rapporté · Dépistage des troubles bipolaires. Sensibilité ~73%, spécificité ~90% pour le bipolaire I.</div>
+          <div class="tool-for">Pour : <span>Bipolaire I/II</span><span>Cyclothymie</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">HAM-D — Hamilton Depression Rating Scale</div>
+          <div class="tool-desc">17 à 21 items · Administré par clinicien · Mesure sévérité de la dépression. Très utilisé pour évaluer réponse au traitement. Score ≥8 = dépression légère.</div>
+          <div class="tool-for">Pour : <span>Dépression majeure</span><span>Suivi traitement</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">MADRS — Montgomery-Åsberg Depression Rating Scale</div>
+          <div class="tool-desc">10 items · Administré par clinicien · Sensible aux changements de traitement. Accent sur symptômes psychologiques de la dépression. Score ≥20 = dépression modérée.</div>
+          <div class="tool-for">Pour : <span>Dépression majeure</span><span>Évaluation pharmacologique</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">LSAS — Liebowitz Social Anxiety Scale</div>
+          <div class="tool-desc">24 items · Administré par clinicien · Évalue la peur ET l'évitement de 24 situations sociales. Distingue la peur de performance vs interaction sociale.</div>
+          <div class="tool-for">Pour : <span>Anxiété sociale</span><span>Phobie sociale</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">PANSS — Positive and Negative Syndrome Scale</div>
+          <div class="tool-desc">30 items · Administré par clinicien · Évalue symptômes positifs, négatifs et généraux de la psychose. Étalon-or pour la schizophrénie.</div>
+          <div class="tool-for">Pour : <span>Schizophrénie</span><span>Troubles psychotiques</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">PGD-13 — Prolonged Grief Disorder Scale</div>
+          <div class="tool-desc">13 items · Auto-rapporté · Évalue les critères diagnostiques du deuil prolongé selon DSM-5-TR. Mesure l'intensité du chagrin persistant ≥12 mois post-perte.</div>
+          <div class="tool-for">Pour : <span>Deuil prolongé</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">BIS/BAS — Behavioral Inhibition/Activation System</div>
+          <div class="tool-desc">24 items · Auto-rapporté · Mesure la sensibilité au système d'inhibition comportementale (évitement) et d'activation (approche). Utile pour anxiété et bipolaire.</div>
+          <div class="tool-for">Pour : <span>Trouble bipolaire</span><span>TAG</span><span>Phobie</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">CONNERS-3 / ASRS — Évaluation TDAH adulte</div>
+          <div class="tool-desc">ASRS-v1.1 : 18 items · Auto-rapporté · Dépistage du TDAH chez l'adulte. Conners-3 : multi-informateurs (adulte, parent, enseignant). Aligné DSM-5.</div>
+          <div class="tool-for">Pour : <span>TDAH</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">DIB-R — Diagnostic Interview for Borderlines</div>
+          <div class="tool-desc">Entrevue semi-structurée · Évalue les 4 domaines du TPL : affect, cognitions, comportements impulsifs, relations interpersonnelles. Utilisée avec SCID-II.</div>
+          <div class="tool-for">Pour : <span>TPL / Borderline</span><span>Troubles de personnalité</span></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-name">Entrevue clinique non-structurée + Anamnèse complète</div>
+          <div class="tool-desc">Toujours le premier outil. Histoire du problème, antécédents psychiatriques, médicaux, familiaux, histoire développementale, fonctionnement actuel (travail, social, famille).</div>
+          <div class="tool-for">Pour : <span>Tous les troubles</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ PAGE: PHRASES VERBATIM ══════════ -->
+    <div id="page-phrases" class="page">
+      <div class="cat-header" style="background:rgba(245,158,11,0.05);border-color:rgba(245,158,11,0.2);">
+        <div class="cat-header-icon">💬</div>
+        <div>
+          <div class="cat-header-title" style="color:#fbbf24;">Phrases Verbatim à l'oral</div>
+          <div class="cat-header-desc">Formulations professionnelles prêtes à utiliser</div>
+        </div>
+      </div>
+
+      <div class="phrases-box">
+        <div class="phrases-title">🔵 Ouvrir le diagnostic</div>
+        <div class="phrase-item">« Sur la base de la vignette présentée, le diagnostic principal qui me semble le plus cohérent est [TROUBLE] selon le DSM-5-TR, correspondant au code F[XX.X], et à [CIM-11] dans la classification internationale. »</div>
+        <div class="phrase-item">« Les éléments clés qui orientent vers ce diagnostic sont : [symptôme 1], [symptôme 2], et [symptôme 3], présents depuis [durée], causant une détresse cliniquement significative. »</div>
+      </div>
+
+      <div class="phrases-box">
+        <div class="phrases-title">🟡 Présenter les différentiels</div>
+        <div class="phrase-item">« Pour le diagnostic différentiel, j'aurais envisagé [TROUBLE], mais je l'écarte car [raison spécifique à la vignette]. »</div>
+        <div class="phrase-item">« Il est important de considérer également [TROUBLE] étant donné la comorbidité fréquente, bien que dans ce cas [élément] oriente davantage vers [diagnostic principal]. »</div>
+        <div class="phrase-item">« Il faudrait aussi exclure une étiologie médicale ou liée à une substance avant de confirmer ce diagnostic. »</div>
+      </div>
+
+      <div class="phrases-box">
+        <div class="phrases-title">🟢 Présenter les outils</div>
+        <div class="phrase-item">« Pour évaluer ce trouble de façon standardisée, j'utiliserais le [NOM OUTIL], qui est un questionnaire auto-rapporté de [N] items permettant d'évaluer [quoi] et dont les qualités psychométriques sont bien établies. »</div>
+        <div class="phrase-item">« Je commencerais par une entrevue clinique complète via le MINI ou le SCID-5, suivie de mesures spécifiques comme le [PHQ-9 / GAD-7 / PCL-5 / Y-BOCS], afin de quantifier la sévérité des symptômes. »</div>
+      </div>
+
+      <div class="phrases-box">
+        <div class="phrases-title">🟣 Présenter l'étiologie</div>
+        <div class="phrase-item">« Sur le plan étiologique, j'adopte une perspective biopsychosociale. Au niveau biologique... Au niveau psychologique... Au niveau social et environnemental... »</div>
+        <div class="phrase-item">« Les facteurs de vulnérabilité incluent [facteurs génétiques/tempéramentaux], qui interagissent avec des facteurs précipitants comme [stresseurs spécifiques] et des facteurs de maintien tels que [évitement/rumination]. »</div>
+      </div>
+
+      <div class="phrases-box">
+        <div class="phrases-title">🔴 Présenter les interventions</div>
+        <div class="phrase-item">« Concernant les interventions fondées sur des données probantes, la première ligne serait la thérapie cognitivo-comportementale (TCC), qui a démontré une efficacité robuste pour ce trouble, avec un niveau de preuve élevé (méta-analyses). »</div>
+        <div class="phrase-item">« En complément, ou si la TCC n'est pas disponible rapidement, une intervention pharmacologique serait indiquée, notamment [ISRS / IRSN / stabilisateur d'humeur], en coordination avec un médecin psychiatre. »</div>
+        <div class="phrase-item">« Il serait également pertinent d'intégrer [psychoéducation / activation comportementale / EMDR pour le TSPT / DBT pour le TPL], selon les besoins spécifiques du client. »</div>
+      </div>
+    </div>
+
+    <!-- ══════════ DISORDER PAGES (generated by JS) ══════════ -->
+    <div id="disorder-pages"></div>
+
+  </main>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA: All disorders
+// ═══════════════════════════════════════════════════
+const disorders = {
+
+  // ─── HUMEUR ────────────────────────────────────────
+  tdm: {
+    id: 'tdm',
+    title: 'Trouble dépressif majeur (TDM)',
+    subtitle: 'DSM: F32.x / F33.x · CIM-11: 6A70 · Humeur',
+    emoji: '🔵',
+    cat: 'humeur',
+    catLabel: 'Troubles de l\'humeur',
+    diag: {
+      dsm: 'F32.0–F33.9 selon épisode (unique/récurrent) et sévérité (léger/modéré/sévère/psychotique)',
+      cim: 'CIM-11: 6A70 (épisode dépressif) / 6A71 (trouble dépressif récurrent)',
+      criteres: [
+        '≥5 symptômes sur 2 semaines dont <strong>obligatoirement</strong> humeur dépressive OU anhédonie',
+        'SIGECAPS: Sommeil↑↓, Intérêt↓, Culpabilité excessive, Énergie↓, Concentration↓, Appétit↑↓, Psychomoteur agité/ralenti, Suicide (idées)',
+        'Durée ≥ 2 semaines · Détresse cliniquement significative · Pas attribuable à substance/médical',
+        'Jamais d\'épisode maniaque ou hypomaniaque (sinon → Bipolaire)',
+      ],
+      spec: 'Spécificateurs : mélancolique · atypique · péripartum · saisonnier · anxieux · psychotique · catatonie · mixte'
+    },
+    diff: [
+      '<strong>Trouble bipolaire I/II</strong> — exclure tout antécédent maniaque ou hypomaniaque (MDQ, anamnèse)',
+      '<strong>Trouble dépressif persistant (TDP)</strong> — même symptômes mais ≥2 ans, moins sévères',
+      '<strong>Deuil prolongé</strong> — relié à perte spécifique, identité préservée',
+      '<strong>Trouble de l\'adaptation avec humeur dépressive</strong> — stresseur identifiable, sous-seuil TDM',
+      '<strong>TSPT</strong> — symptômes dépressifs mais aussi reviviscences + évitement trauma',
+      '<strong>Hypothyroïdie / anémie / cancer</strong> — exclure cause médicale (bilan sanguin)',
+      '<strong>Schizophrénie / trouble schizoaffectif</strong> — symptômes psychotiques prédominants',
+    ],
+    outils: [
+      '<strong>PHQ-9</strong> — auto-rapporté, 9 items, dépistage et sévérité (seuil ≥10)',
+      '<strong>BDI-II</strong> — Beck Depression Inventory, 21 items, sévérité',
+      '<strong>HAM-D / MADRS</strong> — administrés par clinicien, suivi traitement',
+      '<strong>MINI ou SCID-5</strong> — entrevue structurée, diagnostic différentiel complet',
+      '<strong>MDQ</strong> — exclure composante bipolaire',
+      '<strong>Bilan médical</strong> — TSH, hémogramme, vitamine D, B12',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : dysrégulation sérotonine/dopamine/noradrénaline · prédisposition génétique (héritabilité ~37%) · neuroinflammation · axe HPA dysrégulé',
+      '<strong>Psychologique</strong> : schémas cognitifs négatifs (Beck : triade cognitive : soi/monde/avenir) · rumination · faible estime de soi · impuissance apprise · perfectionnisme',
+      '<strong>Social/environnemental</strong> : événements stressants de vie (deuil, divorce, perte d\'emploi, trauma) · isolement social · pauvreté · discrimination · manque de soutien',
+      '<strong>Facteurs de risque</strong> : antécédents personnels de dépression · sexe féminin (2:1) · antécédents de trauma dans l\'enfance · abus de substances comorbide',
+    ],
+    inter: [
+      '<strong>TCC</strong> — traitement 1ère ligne, restructuration cognitive + activation comportementale (efficacité prouvée, niveau A)',
+      '<strong>Thérapie interpersonnelle (TPI/IPT)</strong> — deuil, conflits, transitions de rôle',
+      '<strong>Activation comportementale</strong> — particulièrement efficace, seul ou dans TCC',
+      '<strong>Mindfulness-Based Cognitive Therapy (MBCT)</strong> — prévention rechutes (≥3 épisodes)',
+      '<strong>ISRS</strong> — fluoxétine, sertraline, escitalopram (1ère ligne pharmacologique)',
+      '<strong>IRSN</strong> — venlafaxine, duloxétine (si douleur comorbide)',
+      '<strong>Psychoéducation</strong> — nature dépression, adhérence traitement, hygiène du sommeil',
+    ],
+    mnemo: 'SIGECAPS → Sommeil, Intérêt, Culpabilité, Énergie, Concentration, Appétit, Psychomoteur, Suicide'
+  },
+
+  tdp: {
+    id: 'tdp',
+    title: 'Trouble dépressif persistant (Dysthymie)',
+    subtitle: 'DSM: F34.1 · CIM-11: 6A72 · Humeur',
+    emoji: '🔵',
+    cat: 'humeur',
+    catLabel: 'Troubles de l\'humeur',
+    diag: {
+      dsm: 'F34.1 · Humeur dépressive la plupart du temps, la plupart des jours',
+      cim: 'CIM-11: 6A72 — Trouble dépressif persistant',
+      criteres: [
+        'Humeur dépressive ≥ <strong>2 ans</strong> (adultes) / 1 an (enfants/ado), la plupart des jours',
+        'Présence d\'au moins 2 parmi : appétit↑↓, sommeil↑↓, énergie↓, faible estime de soi, concentration↓, sentiment de désespoir',
+        'Jamais plus de 2 mois sans symptômes',
+        'Peut inclure TDM concomitant (« double dépression »)',
+      ],
+      spec: 'Spécificateurs: début précoce (<21 ans) / tardif · avec épisode dépressif majeur pur'
+    },
+    diff: [
+      '<strong>TDM</strong> — symptômes plus sévères mais plus courts; TDP = moins intense mais chronique',
+      '<strong>Bipolaire II</strong> — chercher épisodes hypomaniaques passés',
+      '<strong>Trouble de personnalité (dépressif)</strong> — trait stable de personnalité',
+      '<strong>Hypothyroïdie chronique</strong> — exclure cause médicale',
+    ],
+    outils: [
+      '<strong>PHQ-9</strong> — sévérité dépression',
+      '<strong>BDI-II</strong> — sévérité',
+      '<strong>SCID-5 / MINI</strong> — distinguer TDM chronique vs TDP',
+      '<strong>HAM-D</strong> — suivi longitudinal',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : héritabilité plus faible que TDM · anomalies sérotonergiques chroniques · tempérament dépressif (dysthymique)',
+      '<strong>Psychologique</strong> : schémas cognitifs dysfonctionnels profondément enracinés · faible auto-efficacité · style attribucional pessimiste',
+      '<strong>Social</strong> : invalidité chronique · isolement prolongé · conditions de vie difficiles stables · manque de soutien social',
+    ],
+    inter: [
+      '<strong>TCC</strong> — avec accent sur schémas cognitifs chroniques (thérapie schéma)',
+      '<strong>Thérapie basée sur la pleine conscience (MBCT)</strong>',
+      '<strong>CBASP</strong> — Cognitive Behavioral Analysis System of Psychotherapy (spécifique TDP)',
+      '<strong>ISRS / IRSN</strong> — traitement plus long nécessaire (≥2 ans)',
+      '<strong>Association psychothérapie + médication</strong> — plus efficace que chacun seul',
+    ],
+    mnemo: '2 ans · 2+ symptômes · la plupart du temps → "2-2-plupart"'
+  },
+
+  bip1: {
+    id: 'bip1',
+    title: 'Trouble bipolaire I',
+    subtitle: 'DSM: F31.1x · CIM-11: 6A60 · Humeur',
+    emoji: '⚡',
+    cat: 'humeur',
+    catLabel: 'Troubles de l\'humeur',
+    diag: {
+      dsm: 'F31.11 (manie légère) à F31.9 (non spécifié) · Au moins 1 épisode maniaque',
+      cim: 'CIM-11: 6A60 — Trouble bipolaire de type I',
+      criteres: [
+        'Critère NÉCESSAIRE: ≥1 épisode maniaque complet (même si 1 seul dans toute la vie)',
+        '<strong>Épisode maniaque</strong>: humeur élevée/expansive/irritable + énergie ↑ · ≥7 jours · ≥3 symptômes DIGFAST (ou 4 si humeur irritable)',
+        'DIGFAST: Distractibilité, Impulsivité/Imprudence, Grandiosité, Fuite des idées (pensées qui s\'emballent), Agitation/activité ↑, Sommeil↓ (besoin réduit), Talkativité ↑ (logorrhée)',
+        'Sévérité: altération fonctionnelle marquée OU hospitalisation OU traits psychotiques',
+        'Non attribuable à substance/médication/condition médicale',
+      ],
+      spec: 'Spécificateurs: actuel épisode maniaque/dépressif/hypomaniaque/mixte · sévérité · avec psychose · avec anxiété · rapidement alternant (≥4 épisodes/an)'
+    },
+    diff: [
+      '<strong>TDM</strong> — vérifier TOUT antécédent de manie; TDM jamais de manie',
+      '<strong>Bipolaire II</strong> — hypomanie (4j+) vs manie complète (7j+, hospitali., fonct. sévèrement altéré)',
+      '<strong>TDAH</strong> — distractibilité et impulsivité chroniques vs épisodiques',
+      '<strong>Trouble de personnalité limite (TPL)</strong> — instabilité émotionnelle chronique, pas épisodique',
+      '<strong>Schizophrénie / trouble schizoaffectif</strong> — symptômes psychotiques dominants',
+      '<strong>Substance (stimulants, cannabis)</strong> — exclure intoxication/sevrage',
+      '<strong>Condition médicale</strong> — hyperthyroïdie, tumeur cérébrale, épilepsie',
+    ],
+    outils: [
+      '<strong>MDQ</strong> — Mood Disorder Questionnaire (dépistage bipolaire)',
+      '<strong>YMRS</strong> — Young Mania Rating Scale (sévérité épisode maniaque, 11 items, clinicien)',
+      '<strong>PHQ-9</strong> — phase dépressive',
+      '<strong>SCID-5</strong> — entrevue diagnostique complète',
+      '<strong>MINI</strong> — dépistage rapide',
+      '<strong>Bilan médical</strong> — TSH, lithiémie, bilan hépatique, ECG',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : héritabilité élevée (~80%) · gènes CACNA1C, ANK3 · dysrégulation circuits dopaminergiques et sérotonergiques · anomalies mitochondriales',
+      '<strong>Psychologique</strong> : sensibilité aux buts/récompenses (BAS dysrégulé) · pensées magiques · faible tolérance à la frustration',
+      '<strong>Social/déclencheurs</strong> : manque de sommeil (déclencheur majeur!) · stresseurs psychosociaux intenses · usage de substances · naissance d\'un enfant (péripartum)',
+    ],
+    inter: [
+      '<strong>Stabilisateurs d\'humeur</strong> — lithium (1ère ligne, anti-rechute) · valproate · lamotrigine (dépression bipolaire)',
+      '<strong>Antipsychotiques atypiques</strong> — quétiapine, aripiprazole, olanzapine (phases aiguës)',
+      '<strong>Psychoéducation</strong> — reconnaître prodromes, hygiène du sommeil (ESSENTIEL)',
+      '<strong>Thérapie centrée sur le rythme social (IPSRT)</strong> — stabilisation des routines',
+      '<strong>TCC adapté au bipolaire</strong> — gestion des pensées dans les phases dépressives',
+      '<strong>DBT</strong> — si dysrégulation émotionnelle marquée',
+    ],
+    mnemo: 'DIGFAST → D=Distractibilité, I=Imprudence, G=Grandiosité, F=Fuite idées, A=Agitation, S=Sommeil↓, T=Talkativité'
+  },
+
+  bip2: {
+    id: 'bip2',
+    title: 'Trouble bipolaire II',
+    subtitle: 'DSM: F31.81 · CIM-11: 6A61 · Humeur',
+    emoji: '⚡',
+    cat: 'humeur',
+    catLabel: 'Troubles de l\'humeur',
+    diag: {
+      dsm: 'F31.81 · Au moins 1 épisode hypomaniaque + au moins 1 épisode dépressif majeur',
+      cim: 'CIM-11: 6A61 — Trouble bipolaire de type II',
+      criteres: [
+        '<strong>Hypomanie</strong>: mêmes symptômes que manie mais ≥4 jours (pas 7) et sans hospitalisation ni psychose',
+        'Changement fonctionnel observable par autrui mais sans altération marquée',
+        'Jamais d\'épisode maniaque complet (sinon = Bipolaire I)',
+        'Au moins 1 épisode dépressif majeur complet (≥2 semaines, ≥5 symptômes)',
+      ],
+      spec: 'Souvent sous-diagnostiqué; patients consultent en phase dépressive et oublient hypomanies'
+    },
+    diff: [
+      '<strong>Bipolaire I</strong> — chercher tout épisode maniaque complet dans l\'histoire',
+      '<strong>TDM récurrent</strong> — peut sembler identique si hypomanies passées inaperçues (MDQ!)',
+      '<strong>Cyclothymie</strong> — sous-seuil pour TDM et hypomanie; ≥2 ans de fluctuations',
+      '<strong>TPL</strong> — instabilité chronique vs épisodique',
+      '<strong>TDAH</strong> — impulsivité et distractibilité continues',
+    ],
+    outils: [
+      '<strong>MDQ</strong> — dépistage bipolaire (attention: peut manquer bipolaire II)',
+      '<strong>HCL-32</strong> — Hypomania Checklist-32 (plus sensible pour bipolaire II)',
+      '<strong>PHQ-9</strong> — sévérité dépression',
+      '<strong>SCID-5</strong> — diagnostic différentiel précis',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : héritabilité élevée · trait hyperthymique constitutionnel · dysrégulation sérotonine/dopamine',
+      '<strong>Psychologique</strong> : sensibilité au stress · perfectionnisme · dysrégulation émotionnelle',
+      '<strong>Social</strong> : perturbations du rythme circadien · stress chronique · travail posté/décalé horaire',
+    ],
+    inter: [
+      '<strong>Lamotrigine</strong> — plus efficace pour prévention rechutes dépressives (bipolaire II)',
+      '<strong>Quétiapine</strong> — efficace phases dépressives',
+      '<strong>Lithium</strong> — prévention rechutes maniaques/dépressives',
+      '<strong>Psychoéducation + IPSRT</strong> — hygiène du sommeil, stabilisation des rythmes',
+      '<strong>TCC adapté</strong> — phases dépressives',
+    ],
+    mnemo: 'Bipolaire II: "deux" = deux épisodes obligatoires (hypomanie 4j + dépression 2sem). Hypomanie = manie LITE (sans hospit.)'
+  },
+
+  cyclo: {
+    id: 'cyclo',
+    title: 'Trouble cyclothymique',
+    subtitle: 'DSM: F34.0 · CIM-11: 6A62 · Humeur',
+    emoji: '🌊',
+    cat: 'humeur',
+    catLabel: 'Troubles de l\'humeur',
+    diag: {
+      dsm: 'F34.0',
+      cim: 'CIM-11: 6A62',
+      criteres: [
+        '≥2 ans d\'oscillations persistantes entre humeur dépressive (sous-seuil TDM) et humeur élevée (sous-seuil hypomanie)',
+        'Jamais plus de 2 mois asymptomatique',
+        'Jamais critères complets pour TDM, manie ou hypomanie dans les 2 premières années',
+        'Symptômes causent détresse ou altération fonctionnelle',
+      ],
+      spec: 'Facteur de risque pour Bipolaire I ou II (spectre bipolaire)'
+    },
+    diff: [
+      '<strong>Bipolaire I ou II</strong> — chercher épisodes au-dessus du seuil diagnostique',
+      '<strong>TDP</strong> — pas de phase hypomaniaque',
+      '<strong>TPL</strong> — instabilité émotionnelle chronique, relations tumultueuses, impulsivité',
+    ],
+    outils: [
+      '<strong>MDQ</strong> — dépistage spectre bipolaire',
+      '<strong>SCID-5</strong> — diagnostic différentiel précis',
+      '<strong>Journal d\'humeur quotidien</strong> — cartographier les oscillations',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : tempérament cyclothymique · prédisposition génétique familiale (spectre bipolaire)',
+      '<strong>Psychologique</strong> : dysrégulation émotionnelle · sensibilité interpersonnelle',
+      '<strong>Social</strong> : stress chronique · irrégularités du rythme veille-sommeil',
+    ],
+    inter: [
+      '<strong>Psychoéducation</strong> — reconnaître les oscillations, stabiliser les rythmes',
+      '<strong>IPSRT</strong> — thérapie centrée sur le rythme social',
+      '<strong>TCC</strong> — gestion des phases basses et hautes',
+      '<strong>Stabilisateurs d\'humeur (si sévère)</strong> — lithium, valproate',
+    ],
+    mnemo: 'Cyclo = "cycles" pendant 2 ANS · SOUS seuil pour tout · Pas de pause > 2 mois'
+  },
+
+  deuil: {
+    id: 'deuil',
+    title: 'Deuil prolongé (Prolonged Grief Disorder)',
+    subtitle: 'DSM: F43.8 · CIM-11: QE62 · Nouveau DSM-5-TR 2022',
+    emoji: '🌫️',
+    cat: 'humeur',
+    catLabel: 'Troubles de l\'humeur',
+    diag: {
+      dsm: 'F43.8 — Nouveau dans DSM-5-TR (2022)',
+      cim: 'CIM-11: QE62 — Trouble de deuil prolongé',
+      criteres: [
+        'Suite au décès d\'une personne proche (≥12 mois pour adultes, ≥6 mois pour enfants)',
+        'Chagrin intense et persistant OU préoccupation/désir intense pour le défunt · presque chaque jour',
+        '≥3 parmi 8: difficulté à accepter la mort, incrédulité, rumination sur la mort, amertume/colère, engourdissement émotionnel, sentiment que la vie n\'a plus de sens, identité perturbée, difficulté à s\'engager dans la vie',
+        'Altération fonctionnelle significative · Symptômes atypiques dans ce contexte culturel',
+      ],
+      spec: 'Distinguer du deuil normal (processus adaptatif)'
+    },
+    diff: [
+      '<strong>TDM avec déclencheur</strong> — TDM centré sur humeur dépressive générale; deuil prolongé centré sur le défunt spécifiquement',
+      '<strong>TSPT</strong> — si décès traumatique (accident, violence), reviviscences du traumatisme',
+      '<strong>Trouble de l\'adaptation</strong> — sous-seuil, <12 mois',
+      '<strong>Deuil normal</strong> — fluctuant, s\'atténue, identité préservée',
+    ],
+    outils: [
+      '<strong>PGD-13</strong> — Prolonged Grief Disorder Scale',
+      '<strong>ICG</strong> — Inventory of Complicated Grief (Prigerson)',
+      '<strong>MINI</strong> — exclure TDM comorbide',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : activation prolongée du système d\'attachement · déséquilibres neurobiologiques similaires à dépendance/sevrage',
+      '<strong>Psychologique</strong> : style d\'attachement anxieux · difficultés à intégrer la perte · rumination · évitement de la douleur',
+      '<strong>Social</strong> : mort soudaine ou traumatique · relation avec le défunt très intense/dépendante · manque de soutien social · isolement',
+    ],
+    inter: [
+      '<strong>Thérapie du deuil compliqué (CGT)</strong> — traitement spécifique fondé sur données probantes (Shear et al.)',
+      '<strong>Exposition à la douleur du deuil</strong> — acceptation de la réalité de la perte',
+      '<strong>TCC adaptée au deuil</strong> — restructuration des pensées liées à la perte',
+      '<strong>Antidépresseurs (ISRS)</strong> — si TDM comorbide',
+    ],
+    mnemo: '≥12 mois · centré sur le défunt · 3+ symptômes · identité perturbée → ce n\'est plus du deuil "normal"'
+  },
+
+  // ─── ANXIÉTÉ ────────────────────────────────────────
+  tag: {
+    id: 'tag',
+    title: 'Trouble anxieux généralisé (TAG)',
+    subtitle: 'DSM: F41.1 · CIM-11: 6B00 · Anxiété',
+    emoji: '🌀',
+    cat: 'anxiete',
+    catLabel: 'Troubles anxieux',
+    diag: {
+      dsm: 'F41.1',
+      cim: 'CIM-11: 6B00 — Trouble anxieux généralisé',
+      criteres: [
+        'Anxiété et soucis excessifs (appréhension inquiète) à propos de multiples domaines · ≥6 mois',
+        'Difficulté à contrôler les soucis',
+        '≥3 parmi 6 (≥1 chez enfant) : agitation/nerfs, fatigabilité, concentration↓, irritabilité, tension musculaire, perturbation du sommeil',
+        'Détresse cliniquement significative ou altération fonctionnelle',
+        'Non attribuable à substance/médical/autre trouble mental',
+      ],
+      spec: 'Soucis = diffus, nombreux domaines (travail, santé, argent, famille); différent des peurs spécifiques'
+    },
+    diff: [
+      '<strong>TDM</strong> — anxiété peut être présente mais la dépression est primaire; TAG = anxiété prédominante',
+      '<strong>Trouble panique</strong> — attaques de panique situationnelles ou spontanées vs inquiétude diffuse',
+      '<strong>TOC</strong> — obsessions intrusives ego-dystones vs soucis du TAG (ego-syntones, sur réalité quotidienne)',
+      '<strong>TSPT</strong> — hypervigilance liée à trauma spécifique',
+      '<strong>Anxiété de séparation</strong> — soucis centrés sur séparation des figures d\'attachement',
+      '<strong>Hyperthyroïdie</strong> — exclure cause médicale (TSH)',
+    ],
+    outils: [
+      '<strong>GAD-7</strong> — outil principal TAG (7 items, seuil ≥10)',
+      '<strong>BAI</strong> — symptômes anxieux (somatiques)',
+      '<strong>PSWQ</strong> — Penn State Worry Questionnaire (rumination)',
+      '<strong>MINI ou SCID-5</strong> — diagnostic différentiel',
+      '<strong>Bilan médical</strong> — TSH, glycémie, ECG',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : dysrégulation axe HPA · hyperactivité amygdale · sécrétion excessive cortisol · héritabilité ~30% · tempérament anxieux/inhibition comportementale',
+      '<strong>Psychologique</strong> : intolérance à l\'incertitude · croyances sur l\'utilité de s\'inquiéter · biais attentionnel vers les menaces · évitement cognitif (s\'inquiéter = éviter les images anxiogènes)',
+      '<strong>Social/environnemental</strong> : événements stressants chroniques · instabilité professionnelle/financière · parentalité anxieuse · surprotection parentale',
+    ],
+    inter: [
+      '<strong>TCC</strong> — 1ère ligne: restructuration cognitive de l\'intolérance à l\'incertitude + relaxation + exposition',
+      '<strong>Thérapie basée sur la pleine conscience (MBSR/MBCT)</strong> — niveau A d\'efficacité',
+      '<strong>ACT</strong> — Acceptance and Commitment Therapy',
+      '<strong>ISRS</strong> — escitalopram, paroxétine, sertraline (1ère ligne pharmacologique)',
+      '<strong>IRSN</strong> — venlafaxine, duloxétine',
+      '<strong>Buspirone</strong> — alternative non-benzodiazépine',
+      '<strong>Relaxation musculaire progressive (Jacobson)</strong>',
+    ],
+    mnemo: '6 mois · 6 domaines · 3+ symptômes · FATICIS: Fatigue, Agitation, Tension, Irritabilité, Concentration↓, Insomnie, Soucis incontrôlables'
+  },
+
+  panic: {
+    id: 'panic',
+    title: 'Trouble panique',
+    subtitle: 'DSM: F41.0 · CIM-11: 6B01 · Anxiété',
+    emoji: '💥',
+    cat: 'anxiete',
+    catLabel: 'Troubles anxieux',
+    diag: {
+      dsm: 'F41.0',
+      cim: 'CIM-11: 6B01 — Trouble panique',
+      criteres: [
+        'Attaques de panique récurrentes et inattendues (au moins 2)',
+        'Attaque de panique = montée abrupte de peur intense ≥4 parmi 13 symptômes en quelques minutes',
+        '13 symptômes: palpitations, transpiration, tremblements, dyspnée, sensation d\'étouffement, douleur thoracique, nausées, vertiges, frissons/bouffées de chaleur, paresthésies, déréalisation/dépersonnalisation, peur de perdre contrôle/devenir fou, peur de mourir',
+        'Au moins 1 mois d\'inquiétude persistante (attaque suivante) OU changement comportemental maladaptatif',
+      ],
+      spec: 'Avec/sans agoraphobie; attaque de panique situationnelle vs inattendue'
+    },
+    diff: [
+      '<strong>TAG</strong> — anxiété diffuse chronique sans attaques discrètes',
+      '<strong>Agoraphobie</strong> — évitement de situations; peut coexister avec trouble panique',
+      '<strong>Phobie spécifique</strong> — peur d\'un objet/situation précise',
+      '<strong>TSPT</strong> — attaques de panique liées à trauma spécifique',
+      '<strong>Causes médicales</strong> — arythmie cardiaque, phéochromocytome, hypoglycémie, épilepsie (ECG, bilan médical ESSENTIEL)',
+      '<strong>Intoxication aux stimulants</strong> — caféine, cocaïne, amphétamines',
+    ],
+    outils: [
+      '<strong>PDSS</strong> — Panic Disorder Severity Scale (7 items, clinicien)',
+      '<strong>BAI</strong> — symptômes anxieux',
+      '<strong>GAD-7</strong> — comorbidité anxieuse',
+      '<strong>MINI / SCID-5</strong> — diagnostic différentiel',
+      '<strong>Journal des attaques de panique</strong> — fréquence, déclencheurs, intensité',
+      '<strong>Bilan cardiaque</strong> — ECG, Holter (exclure cause organique)',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : hyperactivité du locus coeruleus (noradrénaline) · sensibilité au CO2 · dysrégulation du système nerveux autonome · génétique (héritabilité ~40%)',
+      '<strong>Psychologique</strong> : sensibilité à l\'anxiété (craindre les sensations physiques) · catastrophisation des sensations corporelles · hypervigilance intéroceptive · conditionnement de la peur',
+      '<strong>Social</strong> : stress psychosocial aigu · trauma · séparation ou perte importante',
+    ],
+    inter: [
+      '<strong>TCC avec exposition intéroceptive</strong> — traitement 1ère ligne (exposition aux sensations physiques craintes)',
+      '<strong>Psychoéducation</strong> — nature des attaques de panique, cycle anxiété',
+      '<strong>Respiration diaphragmatique</strong> — technique de gestion immédiate',
+      '<strong>ISRS</strong> — paroxétine, sertraline, escitalopram (maintien)',
+      '<strong>Benzodiazépines</strong> — usage court terme seulement (clonazépam)',
+    ],
+    mnemo: '13 symptômes · 4+ pour attaque · INATTENDUE au moins 2 fois · Peur de la PEUR = le problème principal'
+  },
+
+  anxsoc: {
+    id: 'anxsoc',
+    title: 'Trouble d\'anxiété sociale (Phobie sociale)',
+    subtitle: 'DSM: F40.10 · CIM-11: 6B04 · Anxiété',
+    emoji: '👥',
+    cat: 'anxiete',
+    catLabel: 'Troubles anxieux',
+    diag: {
+      dsm: 'F40.10',
+      cim: 'CIM-11: 6B04 — Trouble d\'anxiété sociale',
+      criteres: [
+        'Peur marquée d\'une ou plusieurs situations sociales dans lesquelles évaluation par autrui est possible',
+        'Crainte d\'agir ou de montrer des symptômes d\'anxiété de façon humiliante/embarrassante',
+        'Situations sociales provoquent PRESQUE TOUJOURS la peur ou l\'anxiété',
+        'Situations sociales évitées ou endurées avec peur/anxiété intense',
+        'Peur disproportionnée au danger réel · Durée ≥6 mois · Détresse/altération fonctionnelle',
+      ],
+      spec: 'Spécificateur: seulement de performance (discours, concert); âge d\'apparition typique: 13 ans'
+    },
+    diff: [
+      '<strong>Timidité normale</strong> — pas de détresse clinique ni altération fonctionnelle',
+      '<strong>Trouble panique</strong> — peur des attaques de panique dans situations sociales',
+      '<strong>Agoraphobie</strong> — évite situations car difficile de fuir/se faire aider (pas évaluation)',
+      '<strong>TAG</strong> — soucis diffus incluant mais non limités à situations sociales',
+      '<strong>Dépression majeure</strong> — retrait social secondaire à anhédonie',
+      '<strong>Trouble de personnalité évitante</strong> — évitement social envahissant, chevauchement avec anxiété sociale sévère',
+    ],
+    outils: [
+      '<strong>LSAS</strong> — Liebowitz Social Anxiety Scale (24 items, peur + évitement)',
+      '<strong>SPIN</strong> — Social Phobia Inventory (17 items, auto-rapporté)',
+      '<strong>GAD-7</strong> — composante anxieuse générale',
+      '<strong>SCID-5 / MINI</strong> — diagnostic différentiel',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : inhibition comportementale (tempérament) · héritabilité ~40% · hyperactivité amygdale aux visages humains',
+      '<strong>Psychologique</strong> : peur de l\'évaluation négative · biais d\'attention (centré sur soi vs situation) · haute surveillance des signaux sociaux · expériences humiliantes passées (intimidation/bullying)',
+      '<strong>Social</strong> : parentalité surprotectrice/critique · trauma social (humiliation publique) · manque d\'occasions de socialisation dans l\'enfance',
+    ],
+    inter: [
+      '<strong>TCC avec exposition en groupe</strong> — expositions graduelles aux situations craintes',
+      '<strong>Thérapie d\'exposition + restructuration cognitive</strong>',
+      '<strong>ISRS</strong> — paroxétine, escitalopram, sertraline (1ère ligne)',
+      '<strong>IRSN</strong> — venlafaxine',
+      '<strong>Bêtabloquants</strong> — type de performance seulement (propranolol, avant l\'événement)',
+      '<strong>Social Skills Training</strong> — si déficits réels de compétences sociales',
+    ],
+    mnemo: '6 mois · TOUJOURS anxieux en situation sociale · Peur du REGARD des autres · Évitement ou souffrance → "E.S.C.A.P.E." (Évaluation, Scrutin, Crainte, Avoidance, Performance, Embarras)'
+  },
+
+  agora: {
+    id: 'agora',
+    title: 'Agoraphobie',
+    subtitle: 'DSM: F40.00 · CIM-11: 6B02 · Anxiété',
+    emoji: '🚪',
+    cat: 'anxiete',
+    catLabel: 'Troubles anxieux',
+    diag: {
+      dsm: 'F40.00',
+      cim: 'CIM-11: 6B02',
+      criteres: [
+        'Peur ou anxiété marquée pour ≥2 des 5 situations: transports en commun, espaces ouverts, espaces clos, file d\'attente/foule, hors du domicile seul',
+        'Crainte que fuir serait difficile ou aide indisponible en cas de panique/incapacité',
+        'Situations évitées ou endurées avec grande détresse OU nécessite accompagnateur',
+        'Durée ≥6 mois · Peur disproportionnée au danger réel · Détresse/altération fonctionnelle',
+      ],
+      spec: 'Peut être diagnostiquée seule (sans trouble panique); grave = peut confiner à domicile'
+    },
+    diff: [
+      '<strong>Trouble panique avec agoraphobie</strong> — attaques de panique déclenchent l\'évitement',
+      '<strong>Phobie spécifique (situationnelle)</strong> — peur limitée à 1 situation',
+      '<strong>TSPT</strong> — évitement de situations liées au trauma',
+      '<strong>TAG</strong> — inquiétude diffuse sans évitement situationnel spécifique',
+    ],
+    outils: [
+      '<strong>PDSS</strong> — si avec trouble panique',
+      '<strong>MI</strong> — Mobility Inventory (mesure évitement agoraphobique)',
+      '<strong>BAI</strong> — sévérité anxiété',
+      '<strong>SCID-5</strong> — diagnostic',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : sensibilité à l\'anxiété · prédisposition génétique · souvent secondaire à trouble panique',
+      '<strong>Psychologique</strong> : catastrophisation · peur de perdre le contrôle · apprentissage de la peur par conditionnement',
+      '<strong>Social</strong> : événements de vie traumatiques · renforcement de l\'évitement par l\'entourage',
+    ],
+    inter: [
+      '<strong>TCC avec exposition in vivo graduelle</strong> — traitement 1ère ligne',
+      '<strong>Exposition intéroceptive</strong> — si panique comorbide',
+      '<strong>ISRS</strong> — si avec trouble panique',
+      '<strong>Cartographie des peurs</strong> — hiérarchie d\'exposition',
+    ],
+    mnemo: '5 types de situations → ≥2 · Peur de ne pas pouvoir FUIR ou être SECOURU · Évite ou besoin d\'accompagnateur'
+  },
+
+  phobie: {
+    id: 'phobie',
+    title: 'Phobie spécifique',
+    subtitle: 'DSM: F40.2x · CIM-11: 6B03 · Anxiété',
+    emoji: '😱',
+    cat: 'anxiete',
+    catLabel: 'Troubles anxieux',
+    diag: {
+      dsm: 'F40.218 (animaux), F40.228 (environnement naturel), F40.230/231/232 (sang-injection), F40.248 (situationnel), F40.298 (autre)',
+      cim: 'CIM-11: 6B03',
+      criteres: [
+        'Peur ou anxiété marquée devant un objet/situation spécifique',
+        'L\'objet phobogène provoque PRESQUE TOUJOURS une réponse immédiate de peur',
+        'L\'objet est activement évité ou enduré avec peur/anxiété intense',
+        'Peur disproportionnée · Durée ≥6 mois · Détresse/altération fonctionnelle',
+      ],
+      spec: 'Types: animaux, environnement naturel (orage/hauteur), sang-injection-blessure, situationnel (avion/ascenseur), autre'
+    },
+    diff: [
+      '<strong>Agoraphobie</strong> — évite ≥2 types de situations liées à panique/aide',
+      '<strong>Anxiété sociale</strong> — peur des situations sociales',
+      '<strong>TSPT</strong> — évitement relié à trauma spécifique',
+      '<strong>TOC</strong> — obsessions + compulsions vs peur simple',
+    ],
+    outils: [
+      '<strong>BAI</strong> — composante somatique anxiété',
+      '<strong>Thermomètre de la peur (SUDs)</strong> — hiérarchie d\'exposition (0-100)',
+      '<strong>SCID-5</strong> — spécifier le type',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : réaction vasovagale (phobie sang/blessure uniquement) · prédisposition génétique · tempérament inhibé',
+      '<strong>Psychologique</strong> : conditionnement classique (peur apprise) · modélisation (observer la peur d\'un parent) · information transmise (avertissements catastrophisants)',
+      '<strong>Social</strong> : expérience traumatique directe avec l\'objet phobogène',
+    ],
+    inter: [
+      '<strong>Exposition graduelle in vivo</strong> — traitement de choix, très efficace (niveau A)',
+      '<strong>Désensibilisation systématique</strong> — relaxation + exposition imaginaire + in vivo',
+      '<strong>Thérapie EMDR</strong> — si phobie post-traumatique',
+      '<strong>Thérapie d\'une seule session (OST)</strong> — efficace pour phobies simples',
+    ],
+    mnemo: '1 objet ou situation · TOUJOURS peur · ≥6 mois · Traitement = EXPOSER, EXPOSER, EXPOSER'
+  },
+
+  // ─── TOC ────────────────────────────────────────────
+  toc: {
+    id: 'toc',
+    title: 'Trouble obsessionnel-compulsif (TOC)',
+    subtitle: 'DSM: F42.2 · CIM-11: 6B20 · TOC',
+    emoji: '🔄',
+    cat: 'toc',
+    catLabel: 'TOC et apparentés',
+    diag: {
+      dsm: 'F42.2',
+      cim: 'CIM-11: 6B20 — Trouble obsessionnel-compulsif',
+      criteres: [
+        '<strong>Obsessions</strong> : pensées, impulsions ou images récurrentes/persistantes vécues comme intrusives/non désirées → anxiété · ego-dystoniques · la personne tente de les neutraliser',
+        '<strong>Compulsions</strong> : comportements répétitifs (lavage, vérification, ordre) ou actes mentaux (compter, répéter) · visant à neutraliser l\'anxiété · de façon rigide/excessive',
+        'Obsessions ET/OU compulsions prenant du temps (>1h/jour) OU causant détresse/altération fonctionnelle',
+        'Non attribuable à substance ou condition médicale',
+      ],
+      spec: 'Spécificateur: avec/sans insight (bon/mauvais/absent/croyances délirantes) · TOC lié aux tics'
+    },
+    diff: [
+      '<strong>TAG</strong> — soucis du TAG portent sur problèmes réels de la vie vs obsessions TOC = irrationnelles/intrusives',
+      '<strong>Dépression majeure</strong> — ruminations dépressives (égosyntones) vs obsessions TOC (égodystoniques)',
+      '<strong>Phobie spécifique</strong> — peur d\'un objet externe, pas d\'obsessions intrusives',
+      '<strong>Troubles de la personnalité obsessionnelle (TPOC)</strong> — perfectionnisme, rigidité, sans obsessions/compulsions typiques',
+      '<strong>Trouble de l\'alimentation</strong> — préoccupations pour la nourriture/corps',
+      '<strong>Schizophrénie</strong> — pensées intrusives, mais avec insight absent et autres symptômes psychotiques',
+    ],
+    outils: [
+      '<strong>Y-BOCS</strong> — Yale-Brown OC Scale (étalon-or, obsessions + compulsions, 0-40)',
+      '<strong>OCI-R</strong> — OC Inventory-Revised (18 items, auto-rapporté)',
+      '<strong>GAD-7 / BAI</strong> — comorbidité anxieuse',
+      '<strong>SCID-5</strong> — diagnostic différentiel',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : dysfonction du circuit cortico-striato-thalamo-cortical (CSTC) · sérotonine · génétique (héritabilité ~65%) · facteur PANDAS (streptocoque, chez enfants)',
+      '<strong>Psychologique</strong> : surestimation de la menace · responsabilité excessive · fusion pensée-action (penser = faire) · intolérance à l\'incertitude · perfectionnisme',
+      '<strong>Social</strong> : apprentissage par modélisation · renforcement des compulsions par l\'entourage · événements stressants déclencheurs',
+    ],
+    inter: [
+      '<strong>EPR (Exposition + Prévention de la Réponse)</strong> — traitement 1ère ligne et plus efficace (niveau A)',
+      '<strong>TCC avec EPR</strong> — restructuration cognitive des croyances obsessionnelles',
+      '<strong>ISRS haute dose</strong> — fluoxétine, fluvoxamine, paroxétine (doses plus élevées que pour dépression)',
+      '<strong>Clomipramine</strong> — tricyclique, efficace mais effets secondaires',
+      '<strong>Association ISRS + EPR</strong> — plus efficace que chacun seul',
+    ],
+    mnemo: 'EPR = le traitement principal · Obsessions = EGO-DYSTONIQUES (personne ne veut pas avoir ces pensées) · Circuit CSTC dysfonctionnel'
+  },
+
+  tdc: {
+    id: 'tdc',
+    title: 'Trouble dysmorphique corporel (TDC)',
+    subtitle: 'DSM: F45.22 · CIM-11: 6B21 · TOC',
+    emoji: '🪞',
+    cat: 'toc',
+    catLabel: 'TOC et apparentés',
+    diag: {
+      dsm: 'F45.22',
+      cim: 'CIM-11: 6B21',
+      criteres: [
+        'Préoccupation pour un ou plusieurs défauts ou imperfections perçus dans son apparence physique (imperceptibles ou légers pour les autres)',
+        'À un moment, comportements répétitifs (se regarder dans le miroir, se groomer, chercher rassurance) ou actes mentaux (comparer son apparence) en réponse aux préoccupations',
+        'Préoccupation cause détresse cliniquement significative ou altération fonctionnelle',
+      ],
+      spec: 'Spécificateur: avec/sans dysmorphie musculaire · niveau d\'insight · risque suicidaire élevé!'
+    },
+    diff: [
+      '<strong>TOC</strong> — préoccupations corporelles vs obsessions diverses',
+      '<strong>Anorexie mentale</strong> — préoccupation pour le poids et la silhouette (vs un défaut spécifique)',
+      '<strong>Trouble dépressif majeur</strong> — préoccupations pour l\'apparence peuvent être secondaires',
+      '<strong>Trouble délirant (somatique)</strong> — conviction délirante que le défaut est réel (insight absent)',
+    ],
+    outils: [
+      '<strong>BDD-YBOCS</strong> — Yale-Brown for Body Dysmorphic Disorder',
+      '<strong>BDDQ</strong> — Body Dysmorphic Disorder Questionnaire (dépistage)',
+      '<strong>PHQ-9</strong> — dépression comorbide (très fréquente)',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : similitudes neurobiologiques avec TOC · anomalies traitement visuel (détails vs globalité) · génétique partagée avec TOC',
+      '<strong>Psychologique</strong> : perfectionnisme · faible estime de soi · traumatismes liés à l\'apparence (moqueries, bullying)',
+      '<strong>Social</strong> : expositions aux standards de beauté médiatiques · commentaires critiques sur l\'apparence dans l\'enfance',
+    ],
+    inter: [
+      '<strong>TCC avec EPR adapté au TDC</strong> — 1ère ligne psychothérapeutique',
+      '<strong>ISRS haute dose</strong> — mêmes que TOC (fluoxétine, escitalopram)',
+      '<strong>Psychoéducation</strong> — normaliser la perception déformée',
+      '<strong>⚠️ Éviter chirurgie esthétique</strong> — renforce les préoccupations',
+    ],
+    mnemo: 'TDC = TOC de l\'apparence · Défaut IMPERCEPTIBLE aux autres · Risque suicidaire ÉLEVÉ à évaluer'
+  },
+
+  // ─── TRAUMA ────────────────────────────────────────
+  tspt: {
+    id: 'tspt',
+    title: 'Trouble de stress post-traumatique (TSPT)',
+    subtitle: 'DSM: F43.10 · CIM-11: 6B40 · Trauma',
+    emoji: '⚡',
+    cat: 'trauma',
+    catLabel: 'Troubles liés aux traumatismes',
+    diag: {
+      dsm: 'F43.10 (TSPT) · F43.11 (avec symptômes dissociatifs)',
+      cim: 'CIM-11: 6B40 — PTSD · 6B41 — Complex PTSD',
+      criteres: [
+        '<strong>A</strong>: Exposition à mort, blessure grave ou violence sexuelle (directe, témoin, appris, exposition répétée)',
+        '<strong>B</strong>: ≥1 symptôme intrusif (reviviscences, cauchemars, flashbacks, détresse au rappel trauma, réactions physiologiques)',
+        '<strong>C</strong>: Évitement persistant (pensées/sentiments OU rappels externes du trauma)',
+        '<strong>D</strong>: ≥2 altérations cognitives/émotionnelles (amnésie, croyances négatives, blâme, émotions négatives persistantes, intérêt↓, détachement, anesthésie émotionnelle)',
+        '<strong>E</strong>: ≥2 altérations arousal/réactivité (irritabilité, comportement imprudent, hypervigilance, sursaut exagéré, concentration↓, insomnie)',
+        'Durée ≥1 mois · Détresse/altération fonctionnelle',
+      ],
+      spec: 'Spécificateurs: avec symptômes dissociatifs (dépersonnalisation/déréalisation) · expression retardée (≥6 mois après trauma)'
+    },
+    diff: [
+      '<strong>Trouble stress aigu</strong> — même présentation mais durée 3 jours à 1 mois',
+      '<strong>TDM</strong> — humeur dépressive sans reviviscences ou évitement lié au trauma',
+      '<strong>TAG</strong> — anxiété diffuse sans lien avec trauma spécifique',
+      '<strong>TOC</strong> — pensées intrusives mais pas de trauma; pas d\'évitement situationnel',
+      '<strong>Trouble de l\'adaptation</strong> — stresseur identifiable, symptômes sous-seuil',
+      '<strong>Trouble dissociatif</strong> — si amnésie ou dépersonnalisation prédominantes',
+    ],
+    outils: [
+      '<strong>PCL-5</strong> — PTSD Checklist for DSM-5 (20 items, seuil ≥33)',
+      '<strong>CAPS-5</strong> — Clinician-Administered PTSD Scale (étalon-or, clinicien)',
+      '<strong>Impact of Event Scale-R (IES-R)</strong> — auto-rapporté',
+      '<strong>PHQ-9 + GAD-7</strong> — comorbidités dépressives et anxieuses',
+      '<strong>MINI / SCID-5</strong> — diagnostic complet',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : dysrégulation axe HPA (cortisol bas chronique) · hyperactivité amygdale · hippocampe réduit · dissociation du circuit préfrontal-amygdale · prédisposition génétique FKBP5',
+      '<strong>Psychologique</strong> : trauma précoce (ACEs) · dissociation péri-traumatique · cognitions négatives post-trauma ("je suis en danger") · stratégies d\'adaptation maladaptatives (évitement, rumination)',
+      '<strong>Social</strong> : manque de soutien social post-trauma · trauma interpersonnel (violence, abus) · expositions répétées (TSPT complexe) · réponse inadéquate de l\'entourage',
+    ],
+    inter: [
+      '<strong>EMDR</strong> — désensibilisation et retraitement par mouvements oculaires · niveau A d\'efficacité · recommandé OMS',
+      '<strong>TCC centrée sur le trauma (TCC-CT)</strong> — exposition prolongée (Foa) + restructuration cognitive (CPT)',
+      '<strong>Thérapie de traitement cognitif (TTC/CPT)</strong> — 12 séances, restructure cognitions sur le trauma',
+      '<strong>ISRS</strong> — sertraline, paroxétine (seuls médicaments approuvés FDA pour TSPT)',
+      '<strong>Prazosin</strong> — cauchemars liés au TSPT',
+      '<strong>Stabilisation avant exposition</strong> — si TSPT complexe ou dissociation sévère',
+    ],
+    mnemo: 'ABCDE: Accident/trauma, Bouts intrusifs, C=Cut off/Évitement, D=Distorsions cognitives, E=Éveil/Excitation · EMDR = traitement de choix'
+  },
+
+  aigu: {
+    id: 'aigu',
+    title: 'Trouble de stress aigu',
+    subtitle: 'DSM: F43.0 · CIM-11: 6B41 · Trauma',
+    emoji: '🔥',
+    cat: 'trauma',
+    catLabel: 'Troubles liés aux traumatismes',
+    diag: {
+      dsm: 'F43.0',
+      cim: 'CIM-11: 6B41',
+      criteres: [
+        'Exposition à trauma (même critère A que TSPT)',
+        'Présence de ≥9 des 14 symptômes dans 5 catégories: intrusifs (5), humeur négative (1), dissociatifs (3), évitement (2), arousal (3)',
+        '<strong>Durée: 3 jours à 1 mois</strong> (si persiste >1 mois → TSPT)',
+        'Détresse/altération fonctionnelle',
+      ],
+      spec: 'Forte composante dissociative (dépersonnalisation, déréalisation, amnésie dissociative)'
+    },
+    diff: [
+      '<strong>TSPT</strong> — même présentation mais >1 mois; stress aigu précède parfois TSPT',
+      '<strong>Trouble de l\'adaptation</strong> — stresseur mais pas nécessairement traumatique',
+      '<strong>TDM</strong> — humeur dépressive sans intrusifs ni évitement spécifique',
+    ],
+    outils: [
+      '<strong>ASI</strong> — Acute Stress Inventory',
+      '<strong>SASRQ</strong> — Stanford Acute Stress Reaction Questionnaire',
+      '<strong>PCL-5</strong> — pour suivi et dépistage TSPT ultérieur',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : réponse adrénergique massive · dissociation péritraumatique',
+      '<strong>Psychologique</strong> : dissociation (facteur de risque TSPT) · perception de menace à la vie · histoire de trauma',
+      '<strong>Social</strong> : absence de soutien immédiat post-trauma · trauma interpersonnel',
+    ],
+    inter: [
+      '<strong>Premiers soins psychologiques (PSP)</strong> — stabilisation, sécurité, information',
+      '<strong>TCC brève</strong> — 4-5 séances pour prévenir TSPT',
+      '<strong>Débriefing psychologique (ÉVITER)</strong> — déconseillé (peut aggraver)',
+      '<strong>Soutien social actif</strong> — mobilisation du réseau',
+      '<strong>ISRS court terme</strong> — si symptômes sévères',
+    ],
+    mnemo: '3 jours à 1 MOIS · ≥9 symptômes sur 14 · Forte dissociation · Précurseur possible du TSPT'
+  },
+
+  adapt: {
+    id: 'adapt',
+    title: 'Trouble de l\'adaptation',
+    subtitle: 'DSM: F43.2x · CIM-11: 6B43 · Trauma',
+    emoji: '🌪️',
+    cat: 'trauma',
+    catLabel: 'Troubles liés aux traumatismes',
+    diag: {
+      dsm: 'F43.20 (humeur dépressive) · F43.21 (anxiété) · F43.22 (mixte) · F43.23 (perturbation des conduites) · F43.24 (mixte émotions + conduites) · F43.29 (non spécifié)',
+      cim: 'CIM-11: 6B43',
+      criteres: [
+        'Symptômes émotionnels ou comportementaux en réponse à un <strong>stresseur identifiable</strong>',
+        'Début dans les 3 mois suivant le stresseur',
+        'Disproportionné par rapport au stresseur (ou altération fonctionnelle)',
+        'Ne répond pas aux critères d\'un autre trouble mental spécifique',
+        'Dure moins de 6 mois après la fin du stresseur',
+      ],
+      spec: 'Peut être chronique si stresseur persistant (>6 mois)'
+    },
+    diff: [
+      '<strong>TDM</strong> — TDM si critères complets remplis, même avec stresseur; trouble adaptatif = sous-seuil',
+      '<strong>TAG</strong> — anxiété diffuse sans stresseur clairement identifiable',
+      '<strong>Deuil normal</strong> — processus de deuil attendu vs dépassement disproportionné',
+      '<strong>TSPT</strong> — stresseur traumatique (vie en danger) vs stresseur courant',
+    ],
+    outils: [
+      '<strong>GAD-7 + PHQ-9</strong> — sévérité anxiété et dépression',
+      '<strong>IES-R</strong> — si stresseur traumatique',
+      '<strong>MINI / SCID-5</strong> — exclure autres troubles',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : vulnérabilité biologique au stress · axe HPA · tempérament anxieux',
+      '<strong>Psychologique</strong> : faible résilience · faibles ressources de coping · perfectionnisme · préoccupations catastrophistes',
+      '<strong>Social</strong> : stresseur spécifique (divorce, perte emploi, maladie, retraite, migration) · manque de soutien social · accumulation de stress',
+    ],
+    inter: [
+      '<strong>Thérapie brève axée sur la résolution de problèmes</strong>',
+      '<strong>TCC</strong> — restructuration cognitive + stratégies de coping',
+      '<strong>Psychoéducation</strong> — normaliser réaction, expliquer mécanismes',
+      '<strong>Thérapie de soutien / counseling</strong>',
+      '<strong>Médication courte durée</strong> — si nécessaire (anxiolytiques, antidépresseurs brefs)',
+    ],
+    mnemo: 'Stresseur → dans 3 mois → symptômes excessifs → <6 mois après fin stresseur · Sous-seuil des grands troubles'
+  },
+
+  // ─── AUTRES ────────────────────────────────────────
+  schizo: {
+    id: 'schizo',
+    title: 'Schizophrénie',
+    subtitle: 'DSM: F20.9 · CIM-11: 6A20 · Spectre psychotique',
+    emoji: '🌀',
+    cat: 'autres',
+    catLabel: 'Autres troubles',
+    diag: {
+      dsm: 'F20.9',
+      cim: 'CIM-11: 6A20',
+      criteres: [
+        '≥2 parmi 5 symptômes · chacun présent de façon significative ≥1 mois: délires, hallucinations, discours désorganisé, comportement grossièrement désorganisé/catatonique, symptômes négatifs',
+        'Au moins 1 des 3 premiers (délires, hallucinations, discours désorganisé)',
+        'Altération du fonctionnement social/professionnel significative',
+        'Durée totale ≥6 mois (incluant phase prodromique et résiduelle)',
+      ],
+      spec: 'Symptômes positifs (délires, hallucinations) · négatifs (aplatissement affectif, alogie, avolition, anhédonie, asociabilité)'
+    },
+    diff: [
+      '<strong>Trouble schizoaffectif</strong> — épisodes thymiques prédominants + symptômes psychotiques',
+      '<strong>Trouble bipolaire avec psychose</strong> — symptômes psychotiques uniquement lors d\'épisodes thymiques',
+      '<strong>TDM avec caractéristiques psychotiques</strong> — psychose secondaire à épisode dépressif sévère',
+      '<strong>Trouble schizophréniforme</strong> — durée 1-6 mois',
+      '<strong>Psychose induite par substance</strong> — cannabis, amphétamines, LSD',
+    ],
+    outils: [
+      '<strong>PANSS</strong> — Positive and Negative Syndrome Scale (30 items, clinicien)',
+      '<strong>BPRS</strong> — Brief Psychiatric Rating Scale',
+      '<strong>CDSS</strong> — dépression dans schizophrénie',
+      '<strong>SCID-5</strong> — diagnostic différentiel',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : hyperactivité dopaminergique (voie mésolimbique) · hypofonctionnement glutamate (NMDA) · anomalies structurelles cérébrales · héritabilité ~80% · facteurs obstétricaux (complications périnatales, infections prénatales)',
+      '<strong>Psychologique</strong> : vulnérabilité cognitive · dépassement des ressources de coping · stress émotionnel',
+      '<strong>Social</strong> : hypothèse stress-diathèse · cannabis (facteur de risque x2-6) · migration · urbanité · trauma infantile',
+    ],
+    inter: [
+      '<strong>Antipsychotiques de 2ème génération</strong> — rispéridone, quétiapine, olanzapine, aripiprazole (1ère ligne)',
+      '<strong>TCC pour psychose (TCCEP)</strong> — modifier croyances délirantes, coping',
+      '<strong>Remédiation cognitive</strong> — améliorer fonctionnement cognitif',
+      '<strong>Thérapie familiale psychoéducative</strong> — réduire émotions exprimées, prévenir rechutes',
+      '<strong>Réhabilitation psychosociale</strong> — emploi soutenu (IPS), logement',
+    ],
+    mnemo: '6 mois total · 1 mois de symptômes actifs · 2+ symptômes dont 1 des 3 premiers · Dopa ↑ voie mésolimbique'
+  },
+
+  tpl: {
+    id: 'tpl',
+    title: 'Trouble de personnalité limite (TPL / Borderline)',
+    subtitle: 'DSM: F60.3 · CIM-11: 6D11.5 · Personnalité',
+    emoji: '🌊',
+    cat: 'autres',
+    catLabel: 'Autres troubles',
+    diag: {
+      dsm: 'F60.3',
+      cim: 'CIM-11: 6D11.5 — Trouble de personnalité avec caractéristiques borderline',
+      criteres: [
+        'Mode général d\'instabilité des relations interpersonnelles, de l\'image de soi et des affects + impulsivité marquée · début à l\'adolescence/début adulte · ≥5 parmi 9:',
+        '1) Efforts pour éviter abandon réel/imaginé · 2) Relations instables idéalisation/dévaluation · 3) Instabilité identitaire (image de soi) · 4) Impulsivité dommageable (≥2 domaines) · 5) Comportements suicidaires/automutilation · 6) Instabilité affective · 7) Sentiment chronique de vide · 8) Colère intense inappropriée · 9) Idéation paranoïde transitoire / dissociation',
+      ],
+      spec: 'Ne pas diagnostiquer si épisode thymique seul; chronique et omniprésent dans tous contextes'
+    },
+    diff: [
+      '<strong>Bipolaire II / cyclothymie</strong> — instabilité affective épisodique vs chronique; TPL = états durent heures pas jours',
+      '<strong>TDM</strong> — dépression épisodique vs humeur chroniquement instable',
+      '<strong>TSPT complexe</strong> — trauma précoce, dysrégulation émotionnelle, mais pas d\'instabilité des relations aussi marquée',
+      '<strong>Trouble dépressif persistant</strong> — humeur stable dans sa dépression vs labilité TPL',
+    ],
+    outils: [
+      '<strong>DIB-R</strong> — Diagnostic Interview for Borderlines',
+      '<strong>BPDSI-IV</strong> — BPD Severity Index',
+      '<strong>MSI-BPD</strong> — McLean Screening Instrument (dépistage rapide)',
+      '<strong>PHQ-9</strong> — dépression comorbide fréquente',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : héritabilité ~65% · dérégulation sérotoninergique · hyperréactivité amygdale · tempérament de haute sensibilité émotionnelle',
+      '<strong>Psychologique</strong> : trauma développemental (abus/négligence enfance) · attachement insécure/désorganisé · invalidation émotionnelle chronique · dissociation',
+      '<strong>Social</strong> : environnement invalidant (Linehan) · abus sexuel/physique dans l\'enfance · perte parentale précoce · instabilité familiale',
+    ],
+    inter: [
+      '<strong>DBT (Dialectical Behavior Therapy)</strong> — traitement 1ère ligne (Linehan), niveau A · compétences: pleine conscience, tolérance à la détresse, régulation émotionnelle, efficacité interpersonnelle',
+      '<strong>TCC orientée schémas (Thérapie des schémas)</strong> — schémas précoces inadaptés',
+      '<strong>Thérapie basée sur la mentalisation (MBT)</strong> — Bateman & Fonagy',
+      '<strong>Thérapie focalisée sur le transfert (TFP)</strong> — Kernberg',
+      '<strong>Pharmacologie</strong> — pas de médicament spécifique; ISRS pour dépression/impulsivité; stabilisateurs pour labilité affective',
+    ],
+    mnemo: 'TPL: 9 critères · 5 minimum · ABANDONMENT peur · Identité instable · DBT = traitement de choix'
+  },
+
+  tdah: {
+    id: 'tdah',
+    title: 'TDAH (Trouble déficit de l\'attention / hyperactivité)',
+    subtitle: 'DSM: F90.x · CIM-11: 6A05 · Neurodéveloppement',
+    emoji: '⚡',
+    cat: 'autres',
+    catLabel: 'Autres troubles',
+    diag: {
+      dsm: 'F90.0 (inattention prédominante) · F90.1 (hyperactivité/impulsivité) · F90.2 (combiné)',
+      cim: 'CIM-11: 6A05 — TDAH',
+      criteres: [
+        '≥6 symptômes d\'inattention ET/OU ≥6 hyperactivité-impulsivité (≥5 chez adulte ≥17 ans) · présents ≥6 mois',
+        'Symptômes présents avant 12 ans · dans ≥2 contextes · altération fonctionnelle',
+        'Inattention: oublis, distractions, organisation↓, perd objets, ne suit pas instructions, n\'écoute pas, n\'achève pas tâches',
+        'Hyperactivité: agitation, quitte son siège, court/grimpe, ne peut jouer calmement, moteur toujours en marche, trop bavard, répond avant fin question, ne peut attendre son tour, interrompt',
+      ],
+      spec: 'Chez adulte: moins hyperactivité motrice, plus inattention; difficulté à gérer le temps, procrastination'
+    },
+    diff: [
+      '<strong>TAG</strong> — inquiétudes chroniques causent inattention; TAG = rumination, pas impulsivité',
+      '<strong>TDM</strong> — concentration↓ et fatigue mais temporaire, avec humeur dépressive',
+      '<strong>Bipolaire</strong> — hyperactivité épisodique vs TDAH chronique depuis l\'enfance',
+      '<strong>Trouble du sommeil</strong> — inattention secondaire à manque de sommeil',
+    ],
+    outils: [
+      '<strong>ASRS-v1.1</strong> — Adult ADHD Self-Report Scale (18 items, dépistage adulte)',
+      '<strong>Conners-3</strong> — auto-rapporté et multi-informateurs',
+      '<strong>Tests neuropsychologiques</strong> — CPT (Continuous Performance Test), Trail Making Test',
+      '<strong>SCID-5</strong> — diagnostic différentiel',
+      '<strong>Bilan neuropsychologique complet</strong>',
+    ],
+    etio: [
+      '<strong>Biologique</strong> : héritabilité ~75% · dysfonction dopaminergique et noradrénergique · amygdale et striatum réduits · gènes DRD4, DAT1 · prématurité, exposition prénatale au tabac',
+      '<strong>Psychologique</strong> : déficits des fonctions exécutives · régulation de l\'attention et de l\'inhibition',
+      '<strong>Social</strong> : instabilité familiale · pratiques éducatives inconsistantes · manque de structure',
+    ],
+    inter: [
+      '<strong>Psychoéducation</strong> — comprendre le TDAH, stratégies compensatoires',
+      '<strong>TCC adaptée au TDAH adulte</strong> — gestion du temps, organisation, procrastination',
+      '<strong>Méthylphénidate (Ritalin, Concerta)</strong> — stimulant, 1ère ligne',
+      '<strong>Amphétamines (Adderall, Vyvanse)</strong> — stimulants, 1ère ligne',
+      '<strong>Atomoxétine</strong> — non-stimulant (si tolérance aux stimulants problématique)',
+      '<strong>Coaching TDAH</strong> — soutien pratique quotidien',
+    ],
+    mnemo: '≥6 symptômes · dans 2+ contextes · avant 12 ans · ≥6 mois · Chez adulte: ≥5 symptômes seulement'
+  },
+};
+
+// ═══════════════════════════════════════════════════
+// FLASHCARD DATA
+// ═══════════════════════════════════════════════════
+const flashcards = [];
+Object.values(disorders).forEach(d => {
+  flashcards.push({
+    category: d.catLabel + ' — ' + d.title,
+    question: `Quels sont les critères diagnostiques DSM pour : ${d.title} ?`,
+    answer: `<strong>Code DSM:</strong> ${d.diag.dsm}<br><strong>CIM-11:</strong> ${d.diag.cim}<br><br><ul>${d.diag.criteres.map(c=>`<li>${c}</li>`).join('')}</ul>`
+  });
+  flashcards.push({
+    category: d.catLabel + ' — ' + d.title,
+    question: `Quels sont les diagnostics différentiels principaux pour : ${d.title} ?`,
+    answer: `<ul>${d.diff.map(c=>`<li>${c}</li>`).join('')}</ul>`
+  });
+  flashcards.push({
+    category: d.catLabel + ' — ' + d.title,
+    question: `Quels outils d'évaluation utiliser pour : ${d.title} ?`,
+    answer: `<ul>${d.outils.map(c=>`<li>${c}</li>`).join('')}</ul>`
+  });
+  flashcards.push({
+    category: d.catLabel + ' — ' + d.title,
+    question: `Quels sont les facteurs étiologiques (biopsychosocial) pour : ${d.title} ?`,
+    answer: `<ul>${d.etio.map(c=>`<li>${c}</li>`).join('')}</ul>`
+  });
+  flashcards.push({
+    category: d.catLabel + ' — ' + d.title,
+    question: `Quelles interventions probantes proposer pour : ${d.title} ?`,
+    answer: `<ul>${d.inter.map(c=>`<li>${c}</li>`).join('')}</ul>`
+  });
+});
+
+// Shuffle
+function shuffle(arr) {
+  for(let i=arr.length-1;i>0;i--) {
+    const j=Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+  }
+  return arr;
+}
+
+let fcCards = [...flashcards];
+let fcIndex = 0;
+
+// ═══════════════════════════════════════════════════
+// GENERATE DISORDER PAGES
+// ═══════════════════════════════════════════════════
+function generateDisorderPages() {
+  const container = document.getElementById('disorder-pages');
+  const catColors = { humeur:'#6366f1', anxiete:'#10b981', toc:'#f59e0b', trauma:'#ef4444', autres:'#a855f7' };
+  const catGlows = { humeur:'rgba(99,102,241,0.08)', anxiete:'rgba(16,185,129,0.08)', toc:'rgba(245,158,11,0.08)', trauma:'rgba(239,68,68,0.08)', autres:'rgba(168,85,247,0.08)' };
+
+  Object.values(disorders).forEach(d => {
+    const color = catColors[d.cat];
+    const glow = catGlows[d.cat];
+    
+    const html = `
+    <div id="page-${d.id}" class="page">
+      <div class="cat-header" style="background:${glow};border-color:${color}33;">
+        <div class="cat-header-icon">${d.emoji}</div>
+        <div style="flex:1">
+          <div class="cat-header-title" style="color:${color};">${d.title}</div>
+          <div class="cat-header-desc">${d.subtitle}</div>
+        </div>
+        <button class="mastered-btn" id="btn-${d.id}" onclick="toggleMastered('${d.id}')">✓ Maîtrisé</button>
+      </div>
+
+      <div class="criteria-grid">
+        <!-- DIAGNOSTIC -->
+        <div class="criterion-card crit-1 ${d.cat}-card">
+          <div class="criterion-head">
+            <span>🔵</span> 1. Diagnostic Principal DSM + CIM (7%)
+          </div>
+          <div class="criterion-body">
+            <ul>
+              <li><strong>DSM:</strong> ${d.diag.dsm}</li>
+              <li><strong>CIM-11:</strong> ${d.diag.cim}</li>
+              ${d.diag.criteres.map(c=>`<li>${c}</li>`).join('')}
+              ${d.diag.spec ? `<li><em>${d.diag.spec}</em></li>` : ''}
+            </ul>
+          </div>
+        </div>
+
+        <!-- DIFFÉRENTIEL -->
+        <div class="criterion-card crit-2 ${d.cat}-card">
+          <div class="criterion-head">
+            <span>🟡</span> 2. Diagnostics Différentiels (7%)
+          </div>
+          <div class="criterion-body">
+            <ul>
+              ${d.diff.map(c=>`<li>${c}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <!-- OUTILS -->
+        <div class="criterion-card crit-3 ${d.cat}-card">
+          <div class="criterion-head">
+            <span>🟢</span> 3. Instruments d'Évaluation (7%)
+          </div>
+          <div class="criterion-body">
+            <ul>
+              ${d.outils.map(c=>`<li>${c}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <!-- ÉTIOLOGIE -->
+        <div class="criterion-card crit-4 ${d.cat}-card">
+          <div class="criterion-head">
+            <span>🟣</span> 4. Facteurs Étiologiques (7%)
+          </div>
+          <div class="criterion-body">
+            <ul>
+              ${d.etio.map(c=>`<li>${c}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <!-- INTERVENTIONS -->
+        <div class="criterion-card crit-5 ${d.cat}-card">
+          <div class="criterion-head">
+            <span>🔴</span> 5. Interventions Probantes (7%)
+          </div>
+          <div class="criterion-body">
+            <ul>
+              ${d.inter.map(c=>`<li>${c}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      ${d.mnemo ? `
+      <div class="mnemo">
+        <div class="mnemo-label">🧠 Mémo</div>
+        <div class="mnemo-text">${d.mnemo}</div>
+      </div>` : ''}
+    </div>`;
+
+    container.innerHTML += html;
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  
+  const page = document.getElementById('page-' + id);
+  if(page) page.classList.add('active');
+  
+  const nav = document.getElementById('nav-' + id);
+  if(nav) nav.classList.add('active');
+  
+  window.scrollTo(0,0);
+}
+
+// ═══════════════════════════════════════════════════
+// PROGRESS TRACKING
+// ═══════════════════════════════════════════════════
+const mastered = new Set(JSON.parse(localStorage.getItem('psy_mastered') || '[]'));
+
+function toggleMastered(id) {
+  if(mastered.has(id)) {
+    mastered.delete(id);
+  } else {
+    mastered.add(id);
+  }
+  localStorage.setItem('psy_mastered', JSON.stringify([...mastered]));
+  updateMasteredUI();
+}
+
+function updateMasteredUI() {
+  const total = Object.keys(disorders).length;
+  const count = mastered.size;
+  
+  document.getElementById('progress-fill').style.width = (count/total*100) + '%';
+  document.getElementById('progress-label').textContent = `${count} / ${total} maîtrisés`;
+  
+  Object.keys(disorders).forEach(id => {
+    const btn = document.getElementById('btn-' + id);
+    const nav = document.getElementById('nav-' + id);
+    if(btn) btn.classList.toggle('done', mastered.has(id));
+    if(nav) nav.classList.toggle('done', mastered.has(id));
+  });
+}
+
+function resetAll() {
+  if(confirm('Réinitialiser tout le progrès?')) {
+    mastered.clear();
+    localStorage.removeItem('psy_mastered');
+    localStorage.removeItem('psy_timer_start');
+    updateMasteredUI();
+    startTimer();
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// TIMER
+// ═══════════════════════════════════════════════════
+let timerInterval;
+function startTimer() {
+  clearInterval(timerInterval);
+  const stored = localStorage.getItem('psy_timer_start');
+  const startTime = stored ? parseInt(stored) : Date.now();
+  if(!stored) localStorage.setItem('psy_timer_start', startTime);
+  
+  const duration = 2 * 60 * 60 * 1000; // 2 hours
+  
+  timerInterval = setInterval(() => {
+    const elapsed = Date.now() - startTime;
+    const remaining = duration - elapsed;
+    
+    if(remaining <= 0) {
+      document.getElementById('timer').textContent = '0:00:00';
+      document.getElementById('timer').className = 'danger';
+      clearInterval(timerInterval);
+      return;
+    }
+    
+    const h = Math.floor(remaining / 3600000);
+    const m = Math.floor((remaining % 3600000) / 60000);
+    const s = Math.floor((remaining % 60000) / 1000);
+    
+    document.getElementById('timer').textContent = 
+      `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    
+    const el = document.getElementById('timer');
+    if(remaining < 10 * 60 * 1000) el.className = 'danger';
+    else if(remaining < 30 * 60 * 1000) el.className = 'warn';
+    else el.className = '';
+  }, 1000);
+}
+
+// ═══════════════════════════════════════════════════
+// FLASHCARDS
+// ═══════════════════════════════════════════════════
+function startFlashcards() {
+  fcCards = shuffle([...flashcards]);
+  fcIndex = 0;
+  showCard();
+  document.getElementById('flashcard-overlay').classList.add('active');
+}
+
+function showCard() {
+  const card = fcCards[fcIndex];
+  document.getElementById('fc-category').textContent = card.category;
+  document.getElementById('fc-question').textContent = card.question;
+  document.getElementById('fc-answer').innerHTML = card.answer;
+  document.getElementById('fc-answer').classList.remove('visible');
+  document.getElementById('fc-progress').textContent = `${fcIndex+1} / ${fcCards.length}`;
+}
+
+function showAnswer() {
+  document.getElementById('fc-answer').classList.add('visible');
+}
+
+function nextCard(dir) {
+  fcIndex = (fcIndex + dir + fcCards.length) % fcCards.length;
+  showCard();
+}
+
+function closeFlashcards() {
+  document.getElementById('flashcard-overlay').classList.remove('active');
+}
+
+// ═══════════════════════════════════════════════════
+// TOOLS SEARCH
+// ═══════════════════════════════════════════════════
+function filterTools() {
+  const q = document.getElementById('tools-search').value.toLowerCase();
+  document.querySelectorAll('#tools-list .tool-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(q) ? 'block' : 'none';
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ═══════════════════════════════════════════════════
+document.addEventListener('keydown', e => {
+  if(document.getElementById('flashcard-overlay').classList.contains('active')) {
+    if(e.key === 'ArrowRight') nextCard(1);
+    if(e.key === 'ArrowLeft') nextCard(-1);
+    if(e.key === ' ') { e.preventDefault(); showAnswer(); }
+    if(e.key === 'Escape') closeFlashcards();
+  }
+});
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+generateDisorderPages();
+updateMasteredUI();
+startTimer();
+
+// Update progress label with correct total
+document.getElementById('progress-label').textContent = 
+  `${mastered.size} / ${Object.keys(disorders).length} maîtrisés`;
+</script>
+</body>
+</html>

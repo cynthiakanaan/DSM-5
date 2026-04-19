@@ -2035,15 +2035,6 @@ function generateDisorderPages() {
         <button class="mastered-btn" id="btn-${d.id}" onclick="toggleMastered('${d.id}')">✓ Maîtrisé</button>
       </div>
 
-      ${d.mnemo ? `
-      <div class="mnemo">
-        <div class="mnemo-label">🧠 Mémo</div>
-        <div class="mnemo-text">${d.mnemo}</div>
-      </div>` : ''}
-    </div>`;
-
-    container.innerHTML += html;
-
       <div class="criteria-grid">
         <!-- DIAGNOSTIC -->
         <div class="criterion-card crit-1 ${d.cat}-card">
@@ -2109,6 +2100,14 @@ function generateDisorderPages() {
         </div>
       </div>
 
+      ${d.mnemo ? `
+      <div class="mnemo">
+        <div class="mnemo-label">🧠 Mémo</div>
+        <div class="mnemo-text">${d.mnemo}</div>
+      </div>` : ''}
+    </div>`;
+
+    container.innerHTML += html;
   });
 }
 

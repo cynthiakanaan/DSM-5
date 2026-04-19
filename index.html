@@ -544,19 +544,22 @@ const CATEGORIES = [
     mnemo:'💡 MNÉMO TDC: SIG E CAPS (Sommeil, Intérêt, Culpabilité, Énergie, Concentration, Appétit, Psychomoteur, Suicide) | MANIE: DIG FAST',
     disorders:[
       {
-        id:'tdc', emoji:'😔', name:'Trouble Dépressif Caractérisé (TDC)',
-        dsm:'Trouble dépressif caractérisé', cim:'6A70 – Épisode dépressif', duree:'≥ 2 semaines',
-        mnemo:'🔑 SIG E CAPS — 5/9 dont humeur dépressive OU anhédonie OBLIGATOIRE',
-        criteres:[
-          '😔 Humeur dépressive (la plupart du temps)',
-          '😑 Anhédonie — perte d\'intérêt/plaisir',
-          '⚖️ Variation pondérale (±5%/mois) ou appétit ↓/↑',
-          '😴 Insomnie ou hypersomnie',
-          '🏃 Agitation ou ralentissement psychomoteur (observable)',
-          '⚡ Fatigue, perte d\'énergie quasi-quotidienne',
-          '😰 Culpabilité excessive ou sentiment d\'inutilité',
-          '🧠 Difficultés concentration, indécision',
-          '💀 Pensées de mort récurrentes, idéation suicidaire'
+        id:'tdc', emoji:'😔', name:'Trouble Dépressif Caractérisé (TDC/MDD)',
+        dsm:'F32.x (unique) / F33.x (récurrent; 2mo)', cim:'6A70 (Épisode dépressif unique) / 6A71 (récurrent)', duree:'≥ 2 semaines',
+        mnemo:'P MICCH SAFE — Psychomoteur, Mort, Intérêt, Concentration, Culpabilité, Humeur, Sommeil, Appétit, Fatigue <br> 5+/2sem (quasi-quotidien) dont humeur dépressive OU perte d'intérêt OBLIGATOIRE',
+        criteres:[ 
+          'A',
+          '🧠',
+            ' 1. ↓  🧠 Humeur dépressive (soi (triste, vide) ou autrui (apparait en pleurs))',
+            ' 2. ↓  🧠 Intérêt/plaisir — Anhédonie',
+            ' 3. ↓  🧠 Concentration ou penser/Indécision',
+            ' 4. ↑  🧠 Dévalorisation/Culpabilité lié à la maladie',
+            ' 5. ↑  🧠 Suicide récurrent',
+          '⚖️',
+            ' 6. ↑↓ ⚖️ Appétit/Poids (±5%/mois)',
+            ' 7. ↑↓ ⚖️ Insomnie/Hypersomnie',
+            ' 8. ↓  ⚖️ Fatigue/Énergie',
+            ' 9. ↑↓ ⚖️ Agitation OU Ralentissement psychomoteur (observable par autrui)' 
         ],
         differentiel:['Trouble bipolaire I/II (épisode dépressif)','TAG (irritabilité, fatigue)','Trouble de personnalité borderline','Trouble d\'usage de substances','Trouble schizoaffectif / schizophrénie','Trouble d\'adaptation avec humeur dépressive','Hypothyroïdie (cause médicale)'],
         outils:['📊 BDI-II — Inventaire Beck, auto-évaluation 21 items','📋 SCID-V — Entretien structuré clinicien (gold standard)','📏 HDRS (Hamilton) — évaluation clinicien, 17 items','📱 PHQ-9 — dépistage rapide 9 items'],
@@ -569,7 +572,7 @@ const CATEGORIES = [
         dsm:'Trouble dépressif persistant', cim:'6A71 – Trouble dépressif persistant', duree:'≥ 2 ans (1 an enfant)',
         mnemo:'🔑 Humeur dépressive CHRONIQUE + 2/6 symptômes. Jamais >2 mois sans symptômes.',
         criteres:[
-          '😞 Humeur dépressive, majorité du temps, ≥2 ans (adulte)',
+          '😔 Humeur dépressive, majorité du temps, ≥2 ans (adulte)',
           '⚖️ Appétit diminué ou augmenté',
           '😴 Insomnie ou hypersomnie',
           '⚡ Fatigue, manque d\'énergie',

@@ -86,7 +86,7 @@
   }
 
   #timer {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Calibri', monospace;
     font-size: 22px;
     font-weight: 600;
     color: #10b981;
@@ -261,7 +261,7 @@
     font-size: 12px;
     color: var(--muted);
     margin-top: 2px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Calibri', monospace;
   }
 
   .section-actions {
@@ -351,7 +351,7 @@
     border-radius: 4px;
     padding: 1px 6px;
     font-size: 11px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Calibri', monospace;
     color: var(--muted);
     margin-left: 4px;
   }
@@ -466,7 +466,7 @@
   }
 
   .fc-progress-text {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'Calibri', monospace;
     font-size: 13px;
     color: var(--muted);
     margin-left: auto;
@@ -560,7 +560,7 @@
     color: #c084fc;
     margin-bottom: 4px;
   }
-  .mnemo-text { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text); }
+  .mnemo-text { font-family: 'Calibri', monospace; font-size: 13px; color: var(--text); }
 
   /* ═══════════════════════════════════════
      PAGE SECTIONS
@@ -2035,6 +2035,15 @@ function generateDisorderPages() {
         <button class="mastered-btn" id="btn-${d.id}" onclick="toggleMastered('${d.id}')">✓ Maîtrisé</button>
       </div>
 
+      ${d.mnemo ? `
+      <div class="mnemo">
+        <div class="mnemo-label">🧠 Mémo</div>
+        <div class="mnemo-text">${d.mnemo}</div>
+      </div>` : ''}
+    </div>`;
+
+    container.innerHTML += html;
+
       <div class="criteria-grid">
         <!-- DIAGNOSTIC -->
         <div class="criterion-card crit-1 ${d.cat}-card">
@@ -2100,14 +2109,6 @@ function generateDisorderPages() {
         </div>
       </div>
 
-      ${d.mnemo ? `
-      <div class="mnemo">
-        <div class="mnemo-label">🧠 Mémo</div>
-        <div class="mnemo-text">${d.mnemo}</div>
-      </div>` : ''}
-    </div>`;
-    
-    container.innerHTML += html;
   });
 }
 

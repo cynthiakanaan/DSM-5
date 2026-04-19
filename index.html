@@ -546,22 +546,28 @@ const CATEGORIES = [
     disorders:[
       {
         id:'tdc', emoji:'🔵', name:'Trouble Dépressif Caractérisé (TDC/MDD)',
-        dsm:'F32.x (unique) / F33.x (récurrent; 2mo)', cim:'6A70 (unique) / 6A71 (récurrent)', duree:'≥ 2 semaines',
+        dsm:'F32.x / F33.x - Unique / Récurrent; 2+ épisodes séparés par 2+mo', cim:'6A70 (unique) / 6A71 (récurrent)', duree:'≥ 2 semaines',
         mnemo:'P MICCH SAFE — 5+/2sem (quasi-quotidien) dont humeur dépressive OU perte d\'ntérêt',
         criteres:[
-          '🧠',
-          '1. ↓  🧠 Humeur dépressive',
-          '2. ↓  🧠 Intérêt/plaisir — Anhédonie',
-          '3. ↓  🧠 Concentration ou penser/Indécision',
-          '4. ↑  🧠 Dévalorisation/Culpabilité lié à la maladie',
-          '5. ↑  🧠 Suicide récurrent',
-          '⚖️',
-          '6. ↑↓ ⚖️ Appétit/Poids (±5%/mois)',
-          '7. ↑↓ ⚖️ Insomnie/Hypersomnie',
-          '8. ↓  ⚖️ Fatigue/Énergie',
-          '9. ↑↓ ⚖️ Agitation OU Ralentissement psychomoteur (observable par autrui)'
+          '🧠 ↓ Humeur dépressive',
+          '🧠 ↓ Intérêt/plaisir — Anhédonie',
+          '🧠 ↓ Concentration ou penser/Indécision',
+          '🧠 ↑ Dévalorisation/Culpabilité lié à la maladie',
+          '🧠 ↑ Suicide récurrent',
+          '⚖️ ↑↓ Appétit/Poids (±5%/mois)',
+          '⚖️ ↑↓ Insomnie/Hypersomnie',
+          '⚖️ ↓ ⚖️ Fatigue/Énergie',
+          '⚖️ ↑↓ Agitation OU Ralentissement psychomoteur (observable par autrui)'
         ],
-        differentiel:['Trouble bipolaire I/II (épisode dépressif)','TAG (irritabilité, fatigue)','Trouble de personnalité borderline','Trouble d\'usage de substances','Trouble schizoaffectif / schizophrénie','Trouble d\'adaptation avec humeur dépressive','Hypothyroïdie (cause médicale)'],
+        differentiel:[
+          'Trouble bipolaire I/II — exclure épisode hypo/maniaque passé avec MDQ ou anamnèse',
+          'TAG (irritabilité, fatigue)',
+          'Trouble de personnalité borderline',
+          'Trouble d\'usage de substances',
+          'Trouble schizoaffectif / schizophrénie',
+          'Trouble d\'adaptation avec humeur dépressive',
+          'Hypothyroïdie (cause médicale)'
+        ],
         outils:['📊 BDI-II — Inventaire Beck, auto-évaluation 21 items','📋 SCID-V — Entretien structuré clinicien (gold standard)','📏 HDRS (Hamilton) — évaluation clinicien, 17 items','📱 PHQ-9 — dépistage rapide 9 items'],
         etiologie:['🧬 Génétique: antécédents 1er degré (risque x2-3), héritabilité ~40%','🔬 Neurobiologique: ↓ sérotonine, dopamine, noradrénaline','🧠 Neurostructurel: ↓ volume hippocampe + cortex préfrontal','👶 Adversité enfance: abus, négligence, perte parentale','😣 Stress/événements de vie négatifs (divorce, deuil, chômage)','⚧️ Genre féminin (risque x2), post-partum, périménopause','🏥 Maladies chroniques, hypothyroïdie, douleurs chroniques','😟 Neuroticisme élevé (trait de personnalité)'],
         interventions:['🧠 TCC (1ère ligne) — restructuration cognitive + activation comportementale','💊 ISRS — fluoxétine, sertraline, escitalopram (1ère ligne pharm.)','💊 IRSN — venlafaxine, duloxétine (si douleurs associées)','🧘 MBCT — pleine conscience (prévention rechute, ≥3 épisodes)','📚 Psychoéducation — observance, reconnaître signes précoces','👥 TIP — Thérapie interpersonnelle (conflits relationnels)'],
@@ -572,7 +578,7 @@ const CATEGORIES = [
         dsm:'Trouble dépressif persistant', cim:'6A71 – Trouble dépressif persistant', duree:'≥ 2 ans (1 an enfant)',
         mnemo:'🔑 Humeur dépressive CHRONIQUE + 2/6 symptômes. Jamais >2 mois sans symptômes.',
         criteres:[
-          '😔 Humeur dépressive, majorité du temps, ≥2 ans (adulte)',
+          '🧠 ↓ Humeur dépressive, majorité du temps, ≥2 ans (adulte)',
           '⚖️ Appétit diminué ou augmenté',
           '😴 Insomnie ou hypersomnie',
           '⚡ Fatigue, manque d\'énergie',
